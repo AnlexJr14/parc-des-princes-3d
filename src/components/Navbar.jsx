@@ -1,4 +1,3 @@
-// components/Navbar.jsx
 export default function Navbar({ currentView, setView }) {
     const navItems = [
         { id: 'map', label: "Exploration" },

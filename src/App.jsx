@@ -13,7 +13,7 @@ export default function App() {
       {/* Navbar Minimaliste */}
       <Navbar currentView={view} setView={setView} />
 
-      {/* Main Content - C'est ici que la magie du style opère */}
+      {/* Main Content */}
       <main className="flex-grow">
         <MainContent
           view={view}

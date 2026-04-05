@@ -31,7 +31,7 @@ export const creatorsData = [
             { icon: "globe", url: "https://timeo-dacosta.vercel.app/" },
             { icon: "envelope", url: "mailto:dacostatimeo@gmail.com" }
         ],
-        image: "/proT.jpg",
+        image: "/proT.png",
     },
     {
         id: "axel",

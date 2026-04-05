@@ -1,4 +1,3 @@
-// components/MainContent.jsx
 import Map from './Map';
 import Model3D from './Model3D';
 import Article from './Article';
@@ -6,10 +5,8 @@ import Creators from './Creators';
 
 export default function MainContent({ view, setView, articleData, creatorsData }) {
   return (
-    // Le conteneur principal reste transparent pour laisser voir le fond gris perle de body
     <div className="max-w-[1600px] mx-auto px-6 md:px-12 py-16 w-full transition-all duration-500">
       
-      {/* --- VUE CARTE --- */}
       {view === 'map' && (
         <section className="animate-slideUpFade space-y-16">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12 items-center bg-white p-12 border border-black/5 shadow-sm">
@@ -26,17 +23,14 @@ export default function MainContent({ view, setView, articleData, creatorsData }
             </div>
           </div>
           
-          {/* La carte est posée dans une "premium-card" pour se détacher du fond gris */}
           <div className="premium-card p-3">
             <Map onMarkerClick={() => setView('3d')} />
           </div>
         </section>
       )}
 
-      {/* --- VUE 3D --- */}
       {view === '3d' && (
         <section className="animate-slideUpFade space-y-12">
-          {/* Header 3D sur fond blanc pour le contraste */}
           <div className="bg-white p-10 flex flex-col md:flex-row justify-between items-start gap-6 border border-black/5 shadow-sm">
             <div>
               <span className="text-gray-400 font-mono tracking-widest text-xs uppercase block mb-2">Perspective Numérique</span>
@@ -50,18 +44,16 @@ export default function MainContent({ view, setView, articleData, creatorsData }
             </button>
           </div>
           
-          {/* Le visualiseur 3D dans sa carte premium */}
           <div className="premium-card h-[750px] p-2">
             <Model3D data={articleData} />
           </div>
         </section>
       )}
 
-      {/* --- VUE ARTICLE & CRÉATEURS --- */}
       {(view === 'article' || view === 'creators') && (
         <div className="animate-slideUpFade py-6">
           {view === 'article' && <Article data={articleData} setView={setView} />}
-          {view === 'creators' && <Creators data={creatorsData} />}
+          {view === 'creators' && <Creators data={creatorsData} setView={setView} />}
         </div>
       )}
 

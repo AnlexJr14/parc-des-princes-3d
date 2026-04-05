@@ -1,10 +1,7 @@
-// components/Article.jsx
 export default function Article({ data, setView }) {
     return (
-        // La carte principale de l'article se détache du fond gris perle
         <article className="max-w-7xl mx-auto bg-white p-10 md:p-24 border border-black/5 shadow-[0_20px_60px_rgba(0,0,0,0.05)] relative">
             
-            {/* Fil d'Ariane Minimaliste */}
             <nav className="mb-20 border-b border-black/5 pb-6">
                 <button 
                     onClick={() => setView('map')}
@@ -31,31 +28,26 @@ export default function Article({ data, setView }) {
 
             <div className="space-y-20 text-xl md:text-2xl text-[#333333] leading-relaxed">
                 
-                {/* Paragraphe Intro avec une légère trame de fond bleu très clair */}
                 <div className="bg-[#004170]/5 p-12 border-l-8 border-[#DA291C]">
                     <p className="text-[#004170] text-3xl md:text-4xl leading-snug font-normal col-span-2">
                         {data.content[0]}
                     </p>
                 </div>
 
-                {/* Image principale - Full Width */}
                 <div className="group relative overflow-hidden bg-slate-50 border border-black/5">
                     <img src="/photo1.jpg" alt="Parc des Princes" className="w-full h-[600px] object-cover transition-transform duration-[1.5s] group-hover:scale-105" />
                     <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                 </div>
 
-                {/* Paragraphe 2 sur fond blanc */}
                 <div className="text-[#004170] text-3xl md:text-4xl leading-snug font-normal col-span-2">
                     <p>{data.content[1]}</p>
                 </div>
 
-                {/* Image 2 */}
                 <div className="group relative overflow-hidden bg-slate-50 border border-black/5">
                     <img src="/photo2.jpg" alt="Détails architecture" className="w-full h-[600px] object-cover transition-transform duration-[1.5s] group-hover:scale-105" />
                     <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                 </div>
 
-                {/* Citation Finale - Fond Bleu PSG fort */}
                 <div className="bg-[#004170] py-20 px-12 text-center shadow-xl">
                     <p className="text-3xl md:text-4xl text-[#ceab5d] font-serif italic max-w-4xl mx-auto leading-normal">
                         {data.content[2]}
