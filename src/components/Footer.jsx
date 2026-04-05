@@ -11,7 +11,7 @@ export default function Footer({ setView }) {
                             <span className="font-bold tracking-widest uppercase">Parc 3D Experience</span>
                         </div>
                         <p className="text-gray-500 text-lg leading-relaxed max-w-md font-serif italic">
-                            "Une exploration numérique de la structure de Roger Taillibert, où le béton devient poésie."
+                            "Une exploration numérique du Parc des Princes, le plus beau stade du monde, recréé en 3D par deux étudiants en BUT MMI."
                         </p>
                     </div>
 
