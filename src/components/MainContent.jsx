@@ -13,7 +13,7 @@ export default function MainContent({ view, setView, articleData, creatorsData }
             <div className="col-span-2">
               <span className="text-[#DA291C] font-mono tracking-[0.4em] text-xs uppercase mb-3 block font-bold">Localisation Stratégique</span>
               <h2 className="text-6xl md:text-8xl font-light text-[#004170] tracking-tighter leading-none uppercase">
-                Le Parc <span className="font-bold">des</span><br/> Princes
+                Le <span className="font-bold">Parc </span> des <br/> <span className="font-bold">Princes</span>
               </h2>
             </div>
             <div className="border-l-4 border-[#ceab5d] pl-8 py-4">
