@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import Navbar from './components/Navbar';
-import Footer from './components/footer';
+import Footer from './components/Footer';
 import Model3D from './components/Model3D';
 import Map from './components/Map';
 import Article from './components/Article';
