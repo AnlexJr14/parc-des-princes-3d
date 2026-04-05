@@ -18,8 +18,8 @@ export const creatorsData = [
     {
         id: "timeo",
         name: "Timéo Da Costa",
-        role: "Modélisation 3D et intégration du site web",
-        bio: "Sur ce projet 'Parc 3D Experience', nous avons travaillé en parfaite synergie. Du développement de l'interface à l'intégration, nous avons tout pensé ensemble. Je me suis particulièrement concentré sur la recherche architecturale, la modélisation 3D du Parc des Princes, le texturage et l'exportation optimisée pour le web afin de rendre hommage à l'œuvre de Roger Taillibert.",
+        role: "Modélisation 3D & Développement du site web",
+        bio: "Étudiant en 2ème année de BUT MMI, j'ai co-réalisé le projet 'Parc 3D Experience' en parfaite synergie. De la recherche architecturale à la modélisation 3D du Parc des Princes sur Blender, en passant par le développement de l'interface interactive avec React et Tailwind CSS, nous avons tout pensé et conçu ensemble pour rendre hommage à l'œuvre de Roger Taillibert, le plus beau stade du monde.",
         details: {
             "Rôle Projet": "Développement & Modélisation 3D",
             "Formation": "2ème année BUT MMI",
@@ -36,7 +36,7 @@ export const creatorsData = [
         id: "axel",
         name: "Axel Treffault",
         role: "Modélisation 3D & Développement du site web",
-        bio: "Sur ce projet 'Parc 3D Experience', nous avons travaillé en parfaite synergie. Du design de l'interface à la stratégie de contenu, nous avons tout réalisé ensemble. Je me suis chargé du développement de l'application interactive avec React, de l'intégration de la carte Leaflet et de la conception visuelle globale pour retranscrire l'ambiance du Parc des Princes.",
+        bio: "Étudiant en 2ème année de BUT MMI, j'ai co-réalisé le projet 'Parc 3D Experience' en parfaite synergie. De la recherche architecturale à la modélisation 3D du Parc des Princes sur Blender, en passant par le développement de l'interface interactive avec React et Tailwind CSS, nous avons tout pensé et conçu ensemble pour rendre hommage à l'œuvre de Roger Taillibert, le plus beau stade du monde.",
         details: {
             "Rôle Projet": "Développement & Modélisation 3D",
             "Formation": "2ème année BUT MMI",
