@@ -1,9 +1,45 @@
+/* index.css */
 @import "tailwindcss";
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+@layer base {
+  :root {
+    --psg-blue: #004170;
+    --psg-red: #DA291C;
+    --psg-gold: #ceab5d;
+    
+    /* Nuances de fond pour casser le blanc */
+    --color-bg-main: #F4F4F4; /* Gris perle très clair (effet béton chic) */
+    --color-bg-card: #FFFFFF;  /* Blanc pur réservé aux éléments de contenu */
+  }
+
+  body {
+    /* On applique le fond gris clair globalement */
+    @apply bg-[#F4F4F4] text-[#1A1A1A] antialiased;
+    font-feature-settings: "kern" 1, "liga" 1;
+  }
 }
-.animate-fadeIn {
-  animation: fadeIn 0.4s ease-out forwards;
+
+/* --- Éléments de Style Premium --- */
+
+/* Carte de contenu (Card) avec ombre douce */
+.premium-card {
+  @apply bg-white p-8 md:p-12 border border-black/5 shadow-[0_10px_40px_rgba(0,0,0,0.04)];
+}
+
+/* Séparateur décoratif aux couleurs du club */
+.psg-separator {
+  @apply flex items-center gap-2;
+}
+.psg-separator::before { content:''; @apply w-12 h-1 bg-[#004170]; }
+.psg-separator::after { content:''; @apply w-12 h-1 bg-[#DA291C]; }
+
+
+/* --- Ajustements Leaflet --- */
+.leaflet-container {
+  /* On garde la carte claire, mais on adoucit le contraste */
+  filter: grayscale(0.6) contrast(1) brightness(1.05);
+}
+
+.custom-popup .leaflet-popup-content-wrapper {
+  @apply bg-white p-0 rounded-none shadow-xl border border-black/5;
 }

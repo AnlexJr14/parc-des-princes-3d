@@ -1,59 +1,67 @@
+// components/Article.jsx
 export default function Article({ data, setView }) {
     return (
-        <article className="max-w-4xl mx-auto bg-[#001C3F] p-8 md:p-16 rounded-3xl border border-[#D4AF37]/30 shadow-2xl relative">
+        // La carte principale de l'article se détache du fond gris perle
+        <article className="max-w-7xl mx-auto bg-white p-10 md:p-24 border border-black/5 shadow-[0_20px_60px_rgba(0,0,0,0.05)] relative">
+            
+            {/* Fil d'Ariane Minimaliste */}
+            <nav className="mb-20 border-b border-black/5 pb-6">
+                <button 
+                    onClick={() => setView('map')}
+                    className="text-sm font-mono uppercase tracking-widest text-[#004170] hover:text-[#DA291C] transition-colors font-bold"
+                >
+                    ← Retour au plan
+                </button>
+            </nav>
 
-            <header className="mb-12 text-center border-b border-[#D4AF37]/20 pb-8">
-                <h2 className="text-sm font-bold text-[#E30613] tracking-[0.3em] uppercase mb-4">
-                    {data.subtitle}
-                </h2>
-                <h1 className="text-4xl md:text-6xl font-black tracking-tight text-white leading-tight mb-6 font-serif uppercase">
-                    {data.title}
-                </h1>
-
-                <div className="flex flex-col items-center gap-2 text-xs font-mono text-gray-400 uppercase tracking-wider">
-                    <span className="text-[#D4AF37] font-bold">
-                        Par <button
-                            onClick={() => {
-                                setView('creators');
-                                setTimeout(() => document.getElementById('axel')?.scrollIntoView({ behavior: 'smooth' }), 100);
-                            }}
-                            className="hover:text-white transition-colors"
-                        >Axel Treffault</button> et <button
-                            onClick={() => {
-                                setView('creators');
-                                setTimeout(() => document.getElementById('timeo')?.scrollIntoView({ behavior: 'smooth' }), 100);
-                            }}
-                            className="hover:text-white transition-colors"
-                        >Timéo Da Costa</button>
+            <header className="mb-24 grid grid-cols-1 md:grid-cols-4 gap-12 items-end">
+                <div className="md:col-span-3">
+                    <span className="text-[#DA291C] font-bold tracking-[0.3em] uppercase text-xs mb-4 block">
+                        {data.subtitle}
                     </span>
-                    <span>{data.date}</span>
+                    <h1 className="text-6xl md:text-9xl font-extrabold text-[#004170] leading-none mb-4 uppercase tracking-tighter">
+                        {data.title}
+                    </h1>
+                </div>
+                <div className="font-mono text-sm text-gray-400 uppercase tracking-[0.2em] md:text-right border-r-4 border-[#ceab5d] pr-6 py-2">
+                    Édition Spéciale<br/>
+                    <span className="text-[#004170] font-bold">{data.date}</span>
                 </div>
             </header>
 
-            <div className="space-y-10 text-lg md:text-xl text-gray-300 leading-relaxed font-serif">
-
-                <p className="text-xl md:text-2xl text-white font-medium leading-relaxed">
-                    {data.content[0]}
-                </p>
-
-                <div className="my-10 rounded-2xl overflow-hidden border-2 border-[#D4AF37]/50 shadow-lg bg-black h-[400px] flex items-center justify-center">
-                    <img src="/photo1.jpg" alt="Le Parc des Princes" className="w-full h-full object-cover opacity-80" />
-                </div>
-
-                <p className="text-justify">
-                    {data.content[1]}
-                </p>
-
-                <div className="my-10 rounded-2xl overflow-hidden border-2 border-[#E30613]/50 shadow-lg bg-black h-[400px] flex items-center justify-center">
-                    <img src="/photo2.jpg" alt="Architecture brute" className="w-full h-full object-cover opacity-80 hover:scale-105 transition-transform duration-700" />
-                </div>
-
-                <div className="border-l-4 border-[#E30613] pl-6 py-2 my-10">
-                    <p className="italic text-white">
-                        {data.content[2]}
+            <div className="space-y-20 text-xl md:text-2xl text-[#333333] leading-relaxed">
+                
+                {/* Paragraphe Intro avec une légère trame de fond bleu très clair */}
+                <div className="bg-[#004170]/5 p-12 border-l-8 border-[#DA291C]">
+                    <p className="text-[#004170] text-3xl md:text-4xl leading-snug font-normal col-span-2">
+                        {data.content[0]}
                     </p>
                 </div>
 
+                {/* Image principale - Full Width */}
+                <div className="group relative overflow-hidden bg-slate-50 border border-black/5">
+                    <img src="/photo1.jpg" alt="Parc des Princes" className="w-full h-[600px] object-cover transition-transform duration-[1.5s] group-hover:scale-105" />
+                    <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                </div>
+
+                {/* Paragraphe 2 sur fond blanc */}
+                <div className="text-[#004170] text-3xl md:text-4xl leading-snug font-normal col-span-2">
+                    <p>{data.content[1]}</p>
+                </div>
+
+                {/* Image 2 */}
+                <div className="group relative overflow-hidden bg-slate-50 border border-black/5">
+                    <img src="/photo2.jpg" alt="Détails architecture" className="w-full h-[600px] object-cover transition-transform duration-[1.5s] group-hover:scale-105" />
+                    <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                </div>
+
+                {/* Citation Finale - Fond Bleu PSG fort */}
+                <div className="bg-[#004170] py-20 px-12 text-center shadow-xl">
+                    <p className="text-3xl md:text-4xl text-[#ceab5d] font-serif italic max-w-4xl mx-auto leading-normal">
+                        {data.content[2]}
+                    </p>
+                    <div className="h-1.5 w-24 bg-[#DA291C] mx-auto mt-10 shadow-[0_0_15px_rgba(218,41,28,0.5)]"></div>
+                </div>
             </div>
         </article>
     );
