@@ -1,5 +1,6 @@
 // App.jsx
 import { useState } from 'react';
+import { Analytics } from '@vercel/analytics/react';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import MainContent from './components/MainContent';
@@ -25,6 +26,8 @@ export default function App() {
       </main>
 
       <Footer setView={setView} />
+
+      <Analytics />
     </div>
   );
 }
