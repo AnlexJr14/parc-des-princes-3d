@@ -26,33 +26,35 @@ export default function Footer({ setView }) {
 
                     <div className="md:col-span-4">
                         <h3 className="font-mono text-xs uppercase tracking-[0.3em] text-gray-400 mb-8">Conception</h3>
-                        <div className="space-y-3 flex flex-col items-start">
-                            <button
-                                onClick={() => {
-                                    setView('creators');
-                                    setTimeout(() => document.getElementById('timeo')?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
-                                }}
+                        <div className="space-y-4 flex flex-col items-start">
+                            <button 
+                                onClick={() => { 
+                                    setView('creators'); 
+                                    setTimeout(() => document.getElementById('timeo')?.scrollIntoView({behavior: 'smooth', block: 'start'}), 100); 
+                                }} 
                                 className="text-sm uppercase tracking-widest font-bold text-[#1A1A1A] hover:text-[#DA291C] transition-colors text-left"
                             >
                                 Timéo Da Costa
                             </button>
-                            <button
-                                onClick={() => {
-                                    setView('creators');
-                                    setTimeout(() => document.getElementById('axel')?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
-                                }}
+                            <button 
+                                onClick={() => { 
+                                    setView('creators'); 
+                                    setTimeout(() => document.getElementById('axel')?.scrollIntoView({behavior: 'smooth', block: 'start'}), 100); 
+                                }} 
                                 className="text-sm uppercase tracking-widest font-bold text-[#1A1A1A] hover:text-[#DA291C] transition-colors text-left"
                             >
                                 Axel Treffault
                             </button>
-                            <p className="text-xs text-gray-400 mt-4 font-mono pt-2 border-t border-black/5 w-1/2">BUT MMI - 2026</p>
+                            <p className="text-xs text-gray-400 mt-4 font-mono pt-2 border-t border-black/5 w-1/2">
+                                BUT MMI - 2026
+                            </p>
                         </div>
                     </div>
                 </div>
 
-                <div className="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-black/5 gap-4">
-                    <div className="text-[10px] font-mono tracking-[0.3em] text-gray-400 uppercase">
-                        &copy; Tous droits réservés — Paris, France
+                <div className="flex justify-center items-center pt-8 border-t border-black/5 mt-12">
+                    <div className="text-[12px] font-mono text-center w-full tracking-[0.3em] text-gray-400 uppercase">
+                        &copy; Tous droits réservés — Paris, France — 2026
                     </div>
                 </div>
             </div>

@@ -1,3 +1,4 @@
+import { useRef } from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
@@ -16,19 +17,52 @@ L.Marker.prototype.options.icon = DefaultIcon;
 
 export default function Map({ onMarkerClick }) {
     const position = [48.8414, 2.2530];
+    const mapRef = useRef(null);
+
+    const bounds = [
+        [-90, -180],
+        [90, 180]
+    ];
+
+    const handleRecenter = () => {
+        if (mapRef.current) {
+            mapRef.current.flyTo(position, 14, {
+                duration: 1.5
+            });
+        }
+    };
 
     return (
-        <div className="w-full h-[600px] rounded-3xl overflow-hidden border-4 border-[#ceab5d] shadow-2xl relative">
+        <div
+            className="w-full h-[600px] rounded-3xl overflow-hidden border-4 border-[#ceab5d] shadow-2xl relative z-10"
+            style={{ WebkitMaskImage: '-webkit-radial-gradient(white, black)' }}
+        >
+
+            <button
+                onClick={handleRecenter}
+                className="absolute top-6 right-6 z-[1000] bg-white text-[#004170] border-2 border-[#ceab5d] px-4 py-2 font-bold tracking-[0.2em] text-[10px] uppercase shadow-xl hover:bg-[#004170] hover:text-[#ceab5d] transition-all duration-300 flex items-center gap-2 group"
+            >
+                <svg className="w-4 h-4 group-hover:scale-110 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v1m0 14v1m8-8h-1M5 12H4" />
+                </svg>
+                Recentrer
+            </button>
 
             <MapContainer
                 center={position}
                 zoom={14}
+                minZoom={3}
+                maxBounds={bounds}
+                maxBoundsViscosity={1.0}
                 scrollWheelZoom={true}
-                style={{ height: '100%', width: '100%', zIndex: 10 }}
+                ref={mapRef}
+                style={{ height: '100%', width: '100%', zIndex: 0, borderRadius: 'inherit' }}
             >
                 <TileLayer
-                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+                    attribution='&copy; OpenStreetMap'
                     url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
+                    noWrap={true}
                 />
 
                 <Marker position={position}>

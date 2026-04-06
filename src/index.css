@@ -36,3 +36,8 @@
 .custom-popup .leaflet-popup-content-wrapper {
   @apply bg-white p-0 rounded-none shadow-xl border border-black/5;
 }
+
+.leaflet-container {
+  border-radius: inherit !important;
+  overflow: hidden !important;
+}
