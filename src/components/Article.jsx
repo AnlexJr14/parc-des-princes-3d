@@ -1,6 +1,32 @@
+import { useState, useEffect } from 'react';
 export default function Article({ data, setView }) {
+
+    const [scrollProgress, setScrollProgress] = useState(0);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            const totalScroll = document.documentElement.scrollTop;
+            const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+
+            if (windowHeight > 0) {
+                const scroll = (totalScroll / windowHeight) * 100;
+                setScrollProgress(scroll);
+            }
+        }; window.addEventListener('scroll', handleScroll);
+
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
+
     return (
         <article className="max-w-7xl mx-auto bg-white p-10 md:p-24 border border-black/5 shadow-[0_20px_60px_rgba(0,0,0,0.05)] relative">
+
+            <div
+                className="fixed top-[98px] left-0 h-1.5 z-[9999] bg-gradient-to-r from-[#DA291C] to-[#004170] transition-all duration-75 ease-out"
+                style={{ width: `${scrollProgress}%` }}
+            >
+                <div className="absolute top-0 right-0 h-full w-4 bg-white/50 blur-[2px]"></div>
+            </div>
+
 
             <nav className="mb-20 border-b border-black/5 pb-6">
                 <button
@@ -62,7 +88,7 @@ export default function Article({ data, setView }) {
                 </div>
 
                 <div className="group relative overflow-hidden rounded-lg border-4 border-[#ceab5d] shadow-lg">
-                    <img src="/photo1.jpg" alt="Parc des Princes" className="w-full h-auto transition-transform duration-[1.5s] group-hover:scale-105"/>
+                    <img src="/photo1.jpg" alt="Parc des Princes" className="w-full h-auto transition-transform duration-[1.5s] group-hover:scale-105" />
                     <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                 </div>
 

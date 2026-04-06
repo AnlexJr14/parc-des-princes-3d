@@ -41,3 +41,13 @@
   border-radius: inherit !important;
   overflow: hidden !important;
 }
+
+model-viewer::part(default-progress-bar) {
+  background: linear-gradient(to right, #DA291C, #004170);
+  height: 6px; 
+  border-radius: 4px; 
+}
+
+model-viewer::part(default-progress-mask) {
+  display: none;
+}
