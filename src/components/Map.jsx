@@ -40,7 +40,7 @@ export default function Map({ onMarkerClick }) {
 
             <button
                 onClick={handleRecenter}
-                className="absolute top-6 right-6 z-[1000] bg-white text-[#004170] border-2 border-[#ceab5d] px-4 py-2 font-bold tracking-[0.2em] text-[10px] uppercase shadow-xl hover:bg-[#004170] hover:text-[#ceab5d] transition-all duration-300 flex items-center gap-2 group"
+                className="absolute top-6 right-6 z-1000 bg-white text-[#004170] border-2 border-[#ceab5d] px-4 py-2 font-bold tracking-[0.2em] text-[10px] uppercase shadow-xl hover:bg-[#004170] hover:text-[#ceab5d] transition-all duration-300 flex items-center gap-2 group"
             >
                 <svg className="w-4 h-4 group-hover:scale-110 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -83,13 +83,13 @@ export default function Map({ onMarkerClick }) {
                 </Marker>
             </MapContainer>
 
-            <div className="absolute top-6 left-1/2 -translate-x-1/2 z-[1000] pointer-events-none">
+            <div className="absolute top-6 left-1/2 -translate-x-1/2 z-1000 pointer-events-none">
                 <span className="bg-white text-[#004170] px-8 py-3 border-2 border-[#ceab5d] font-bold tracking-[0.2em] text-xs shadow-2xl whitespace-nowrap uppercase">
                     Cliquez sur le marqueur
                 </span>
             </div>
 
-            <div className="absolute bottom-0 left-0 w-full h-1.5 bg-[#DA291C] z-[1000]"></div>
+            <div className="absolute bottom-0 left-0 w-full h-1.5 bg-[#DA291C] z-1000"></div>
         </div>
     );
 }

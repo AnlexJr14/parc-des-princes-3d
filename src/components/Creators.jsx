@@ -43,7 +43,7 @@ export default function Creators({ data, setView }) {
                                 <img
                                     src={creator.image}
                                     alt={creator.name}
-                                    className="w-full h-full object-cover object-top filter grayscale-[20%] group-hover:grayscale-0 transition-all duration-500"
+                                    className="w-full h-full object-cover object-top filter grayscale-20 group-hover:grayscale-0 transition-all duration-500"
                                     onError={(e) => { e.target.style.display = 'none'; }}
                                 />
                             </div>

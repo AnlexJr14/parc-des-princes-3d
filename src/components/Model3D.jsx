@@ -69,7 +69,7 @@ export default function Model3D({ data }) {
             <div className="space-y-6 mt-4">
                 <div className="flex items-center gap-4 px-2">
                     <h3 className="font-mono text-sm uppercase tracking-[0.3em] text-[#004170] font-bold">L'Anatomie du Stade</h3>
-                    <div className="h-px bg-black/10 flex-grow"></div>
+                    <div className="h-px bg-black/10 grow"></div>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">

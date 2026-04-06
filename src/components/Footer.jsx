@@ -27,20 +27,20 @@ export default function Footer({ setView }) {
                     <div className="md:col-span-4">
                         <h3 className="font-mono text-xs uppercase tracking-[0.3em] text-gray-400 mb-8">Conception</h3>
                         <div className="space-y-4 flex flex-col items-start">
-                            <button 
-                                onClick={() => { 
-                                    setView('creators'); 
-                                    setTimeout(() => document.getElementById('timeo')?.scrollIntoView({behavior: 'smooth', block: 'start'}), 100); 
-                                }} 
+                            <button
+                                onClick={() => {
+                                    setView('creators');
+                                    setTimeout(() => document.getElementById('timeo')?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
+                                }}
                                 className="text-sm uppercase tracking-widest font-bold text-[#1A1A1A] hover:text-[#DA291C] transition-colors text-left"
                             >
                                 Timéo Da Costa
                             </button>
-                            <button 
-                                onClick={() => { 
-                                    setView('creators'); 
-                                    setTimeout(() => document.getElementById('axel')?.scrollIntoView({behavior: 'smooth', block: 'start'}), 100); 
-                                }} 
+                            <button
+                                onClick={() => {
+                                    setView('creators');
+                                    setTimeout(() => document.getElementById('axel')?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
+                                }}
                                 className="text-sm uppercase tracking-widest font-bold text-[#1A1A1A] hover:text-[#DA291C] transition-colors text-left"
                             >
                                 Axel Treffault

@@ -8,7 +8,7 @@ export default function Navbar({ currentView, setView }) {
     return (
         <header className="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b-2 border-[#004170]/10">
             <div className="max-w-[1600px] mx-auto px-6 md:px-12 h-24 flex items-center justify-between">
-                
+
                 <div className="flex items-center gap-4 cursor-pointer group" onClick={() => setView('map')}>
                     <div className="w-12 h-12 flex items-center justify-center border-2 border-[#004170] group-hover:bg-[#004170] group-hover:text-white transition-all duration-500">
                         <span className="font-serif font-bold text-xl">P</span>
@@ -27,8 +27,8 @@ export default function Navbar({ currentView, setView }) {
                             key={item.id}
                             onClick={() => setView(item.id)}
                             className={`relative py-2 text-xs md:text-sm font-mono uppercase tracking-[0.2em] transition-all
-                                ${currentView === item.id 
-                                    ? 'text-[#004170] font-bold after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-[#DA291C]' 
+                                ${currentView === item.id
+                                    ? 'text-[#004170] font-bold after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-[#DA291C]'
                                     : 'text-gray-400 hover:text-[#ceab5d] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-[#ceab5d] hover:after:w-full after:transition-all'
                                 }`}
                         >

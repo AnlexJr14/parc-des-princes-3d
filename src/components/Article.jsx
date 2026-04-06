@@ -21,7 +21,7 @@ export default function Article({ data, setView }) {
         <article className="max-w-7xl mx-auto bg-white p-10 md:p-24 border border-black/5 shadow-[0_20px_60px_rgba(0,0,0,0.05)] relative">
 
             <div
-                className="fixed top-[98px] left-0 h-1.5 z-[9999] bg-gradient-to-r from-[#DA291C] to-[#004170] transition-all duration-75 ease-out"
+                className="fixed top-[98px] left-0 h-1.5 z-9999 bg-linear-to-r from-[#DA291C] to-[#004170] transition-all duration-75 ease-out"
                 style={{ width: `${scrollProgress}%` }}
             >
                 <div className="absolute top-0 right-0 h-full w-4 bg-white/50 blur-[2px]"></div>

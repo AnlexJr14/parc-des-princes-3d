@@ -2,6 +2,10 @@ import Map from './Map';
 import Model3D from './Model3D';
 import Article from './Article';
 import Creators from './Creators';
+import Timeline from './Timeline';
+import KeyFigures from './KeyFigures';
+import NextMatch from './NextMatch';
+
 
 export default function MainContent({ view, setView, articleData, creatorsData }) {
   return (
@@ -23,10 +27,19 @@ export default function MainContent({ view, setView, articleData, creatorsData }
             </div>
           </div>
 
+          <KeyFigures />
+
           <div className="premium-card p-3">
             <Map onMarkerClick={() => setView('3d')} />
           </div>
         </section>
+      )}
+
+      {view === 'map' && (
+        <div className="animate-slideUpFade">
+          <Timeline />
+          <NextMatch />
+        </div>
       )}
 
       {view === '3d' && (
