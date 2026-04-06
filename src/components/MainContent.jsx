@@ -6,14 +6,14 @@ import Creators from './Creators';
 export default function MainContent({ view, setView, articleData, creatorsData }) {
   return (
     <div className="max-w-[1600px] mx-auto px-6 md:px-12 py-16 w-full transition-all duration-500">
-      
+
       {view === 'map' && (
         <section className="animate-slideUpFade space-y-16">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12 items-center bg-white p-12 border border-black/5 shadow-sm">
             <div className="col-span-2">
               <span className="text-[#DA291C] font-mono tracking-[0.4em] text-xs uppercase mb-3 block font-bold">Localisation Stratégique</span>
               <h2 className="text-6xl md:text-8xl font-light text-[#004170] tracking-tighter leading-none uppercase">
-                Le <span className="font-bold">Parc </span> des <br/> <span className="font-bold">Princes</span>
+                Le <span className="font-bold">Parc </span> des <br /> <span className="font-bold">Princes</span>
               </h2>
             </div>
             <div className="border-l-4 border-[#ceab5d] pl-8 py-4">
@@ -22,7 +22,7 @@ export default function MainContent({ view, setView, articleData, creatorsData }
               </p>
             </div>
           </div>
-          
+
           <div className="premium-card p-3">
             <Map onMarkerClick={() => setView('3d')} />
           </div>
@@ -36,15 +36,15 @@ export default function MainContent({ view, setView, articleData, creatorsData }
               <span className="text-gray-400 font-mono tracking-widest text-xs uppercase block mb-2">Perspective Numérique</span>
               <h2 className="text-5xl font-bold text-[#004170] uppercase tracking-tight italic">Architecture</h2>
             </div>
-            <button 
+            <button
               onClick={() => setView('article')}
               className="px-10 py-4 border-2 border-[#ceab5d] text-[#ceab5d] font-mono text-sm uppercase tracking-widest hover:bg-[#ceab5d] hover:text-white transition-all font-bold group"
             >
               L'Histoire <span className="group-hover:translate-x-2 transition-transform inline-block">→</span>
             </button>
           </div>
-          
-          <div className="premium-card h-[750px] p-2">
+
+          <div className="premium-card h-auto min-h-[750px] p-2">
             <Model3D data={articleData} />
           </div>
         </section>
