@@ -34,7 +34,7 @@ export default function Map({ onMarkerClick }) {
 
     return (
         <div
-            className="w-full h-[600px] rounded-3xl overflow-hidden border-4 border-[#ceab5d] shadow-2xl relative z-10"
+            className="w-full h-150 rounded-3xl overflow-hidden border-4 border-[#ceab5d] shadow-2xl relative z-10"
             style={{ WebkitMaskImage: '-webkit-radial-gradient(white, black)' }}
         >
 
@@ -67,7 +67,7 @@ export default function Map({ onMarkerClick }) {
 
                 <Marker position={position}>
                     <Popup className="custom-popup">
-                        <div className="text-center p-2 min-w-[180px]">
+                        <div className="text-center p-2 min-w-45">
                             <h3 className="font-bold text-[#004170] text-lg mb-1 tracking-tight">PARC DES PRINCES</h3>
                             <p className="text-xs text-gray-500 mb-4 leading-tight font-mono">
                                 24 Rue du Commandant Guilbaud<br />75016 Paris

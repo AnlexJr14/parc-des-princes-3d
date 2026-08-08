@@ -27,7 +27,7 @@ export default function AudioToggle() {
         >
             <audio ref={audioRef} src="/ambiance-parc.mp3" loop />
 
-            <div className="flex items-end gap-[2px] h-3 w-3 shrink-0">
+            <div className="flex items-end gap-0.5 h-3 w-3 shrink-0">
                 <div className={`w-1/3 bg-[#004170] transition-all duration-200 ${isPlaying ? 'h-full animate-pulse' : 'h-1'}`}></div>
                 <div className={`w-1/3 bg-[#DA291C] transition-all duration-200 delay-75 ${isPlaying ? 'h-2/3 animate-pulse' : 'h-1'}`}></div>
                 <div className={`w-1/3 bg-[#004170] transition-all duration-200 delay-150 ${isPlaying ? 'h-full animate-pulse' : 'h-1'}`}></div>

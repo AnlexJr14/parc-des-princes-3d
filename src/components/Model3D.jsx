@@ -4,7 +4,7 @@ export default function Model3D({ data }) {
     return (
         <div className="flex flex-col gap-12 pb-12 w-full">
 
-            <div className="w-full h-[600px] rounded-3xl overflow-hidden border-4 border-[#ceab5d] bg-white relative flex items-center justify-center shadow-2xl isolate transition-colors duration-500">
+            <div className="w-full h-150 rounded-3xl overflow-hidden border-4 border-[#ceab5d] bg-white relative flex items-center justify-center shadow-2xl isolate transition-colors duration-500">
 
                 <model-viewer
                     src="/parc-des-princes.glb"

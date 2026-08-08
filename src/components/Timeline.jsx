@@ -45,7 +45,7 @@ export default function Timeline() {
 
     return (
         <section className="w-full bg-[#f8f8f8] py-24 px-6 overflow-hidden">
-            <div className="max-w-[1200px] mx-auto">
+            <div className="max-w-300 mx-auto">
                 
                 <div className="text-center mb-20">
                     <span className="text-[#DA291C] font-mono tracking-[0.4em] text-xs uppercase block font-bold mb-3">Héritage</span>

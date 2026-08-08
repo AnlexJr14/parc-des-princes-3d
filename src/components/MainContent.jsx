@@ -9,7 +9,7 @@ import NextMatch from './NextMatch';
 
 export default function MainContent({ view, setView, articleData, creatorsData }) {
   return (
-    <div className="max-w-[1600px] mx-auto px-6 md:px-12 py-16 w-full transition-all duration-500">
+    <div className="max-w-400 mx-auto px-6 md:px-12 py-16 w-full transition-all duration-500">
 
       {view === 'map' && (
         <section className="animate-slideUpFade space-y-16">
@@ -57,7 +57,7 @@ export default function MainContent({ view, setView, articleData, creatorsData }
             </button>
           </div>
 
-          <div className="premium-card h-auto min-h-[750px] p-2">
+          <div className="premium-card h-auto min-h-187.5 p-2">
             <Model3D data={articleData} />
           </div>
         </section>

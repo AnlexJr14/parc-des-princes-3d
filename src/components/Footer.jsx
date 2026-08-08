@@ -1,7 +1,7 @@
 export default function Footer({ setView }) {
     return (
         <footer className="bg-[#F8F8F8] border-t border-black/5 pt-24 pb-12 mt-20">
-            <div className="max-w-[1600px] mx-auto px-6 md:px-12">
+            <div className="max-w-400 mx-auto px-6 md:px-12">
 
                 <div className="grid grid-cols-1 md:grid-cols-12 gap-12 mb-24">
 

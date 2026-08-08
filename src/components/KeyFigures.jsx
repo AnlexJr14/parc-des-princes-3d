@@ -68,7 +68,7 @@ export default function KeyFigures() {
         <div className="w-full bg-[#004170] py-20 px-6 border-y-4 border-[#ceab5d] my-16 shadow-2xl relative isolate overflow-hidden">
             <div className="absolute inset-0 opacity-5" style={{ backgroundImage: 'radial-gradient(#ceab5d 1px, transparent 1px)', backgroundSize: '30px 30px' }}></div>
 
-            <div className="max-w-[1400px] mx-auto relative z-10">
+            <div className="max-w-350 mx-auto relative z-10">
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 text-center">
                     {figures.map((fig, index) => (
                         <div key={index} className="group flex flex-col items-center">

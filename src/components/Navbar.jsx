@@ -17,7 +17,7 @@ export default function Navbar({ currentView, setView }) {
 
     return (
         <header className="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b-2 border-[#004170]/10">
-            <div className="max-w-[1600px] mx-auto px-6 md:px-12 h-24 flex items-center justify-between">
+            <div className="max-w-400 mx-auto px-6 md:px-12 h-24 flex items-center justify-between">
 
                 <div className="flex items-center gap-4 cursor-pointer group shrink-0" onClick={() => handleNavClick('map')}>
                     <div className="w-12 h-12 flex items-center justify-center border-2 border-[#004170] group-hover:bg-[#004170] group-hover:text-white transition-all duration-500">

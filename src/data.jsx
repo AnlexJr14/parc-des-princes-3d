@@ -44,9 +44,9 @@ export const creatorsData = [
         },
         socials: [
             { icon: "linkedin", url: "https://www.linkedin.com/in/axel-treffault-389729300/" },
-            { icon: "globe", url: "https://treffaultaxel.alwaysdata.net/" },
+            { icon: "globe", url: "https://treffaultaxel.vercel.app/" },
             { icon: "envelope", url: "mailto:axel.treffault@gmail.com" }
         ],
-        image: "/proA.jpg",
+        image: "/proA.webp",
     }
 ];
