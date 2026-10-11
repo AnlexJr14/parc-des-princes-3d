@@ -1,329 +1,173 @@
 import { useState, useEffect } from 'react';
+import Reveal from './Reveal';
+import { scheduleData } from '../data';
 
-export default function NextMatch() {
-    const [matchData, setMatchData] = useState(null);
-    const [otherMatches, setOtherMatches] = useState([]);
-    const [timeLeft, setTimeLeft] = useState({ jours: 0, heures: 0, min: 0, sec: 0 });
-    const [isLoading, setIsLoading] = useState(true);
-    const [showAll, setShowAll] = useState(false);
+const formatNumber = (num) => num.toString().padStart(2, '0');
 
-    const fetchMockAPI = () => {
-        return new Promise((resolve) => {
-            setTimeout(() => {
-                const now = new Date();
+const fallbackMatch = (now) => {
+    const fallbackDate = new Date(now);
+    fallbackDate.setDate(fallbackDate.getDate() + 30);
+    fallbackDate.setHours(21, 0, 0, 0);
 
-                const schedule = [
-                    {
-                        date: "2026-08-23T20:45:00",
-                        league: { name: "Ligue 1" },
-                        teams: {
-                            home: { name: "Paris SG", logo: "https://media.api-sports.io/football/teams/85.png" },
-                            away: { name: "Stade Rennais", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/optimized/guI8eg4hoTyIp6rO1opjxA_500x500.png" }
-                        }
-                    },
-                    {
-                        date: "2026-09-04T20:45:00",
-                        league: { name: "Ligue 1" },
-                        teams: {
-                            home: { name: "Paris SG", logo: "https://media.api-sports.io/football/teams/85.png" },
-                            away: { name: "AS Monaco", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/optimized/RX0XTi5Dtg4joMtuHNmYKg_500x500.png" }
-                        }
-                    },
-                    {
-                        date: "2026-10-10T21:00:00",
-                        league: { name: "Ligue 1" },
-                        teams: {
-                            home: { name: "Paris SG", logo: "https://media.api-sports.io/football/teams/85.png" },
-                            away: { name: "Le Mans FC", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/optimized/d_680kHAdTDWexQw3BemxQ_500x500.png" }
-                        }
-                    },
-                    {
-                        date: "2026-10-25T20:45:00",
-                        league: { name: "Ligue 1" },
-                        teams: {
-                            home: { name: "Paris SG", logo: "https://media.api-sports.io/football/teams/85.png" },
-                            away: { name: "Olympique Lyonnais", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/optimized/SrKK55dUkCxe4mJsyshfCg_500x500.png" }
-                        }
-                    },
-                    {
-                        date: "2026-11-07T21:00:00",
-                        league: { name: "Ligue 1" },
-                        teams: {
-                            home: { name: "Paris SG", logo: "https://media.api-sports.io/football/teams/85.png" },
-                            away: { name: "ES Troyes AC", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/optimized/BUjNnbc4kDTOc5I0IzOQog_500x500.png" }
-                        }
-                    },
-                    {
-                        date: "2026-11-28T21:00:00",
-                        league: { name: "Ligue 1" },
-                        teams: {
-                            home: { name: "Paris SG", logo: "https://media.api-sports.io/football/teams/85.png" },
-                            away: { name: "FC Lorient", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/optimized/bbYkAWWtD6lpK5KyGfr1vA_500x500.png" }
-                        }
-                    },
-                    {
-                        date: "2026-12-12T21:00:00",
-                        league: { name: "Ligue 1" },
-                        teams: {
-                            home: { name: "Paris SG", logo: "https://media.api-sports.io/football/teams/85.png" },
-                            away: { name: "Paris FC", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/optimized/6L0HPrdS4FdFbafBX80QuQ_500x500.png" }
-                        }
-                    },
-                    {
-                        date: "2027-01-23T21:00:00",
-                        league: { name: "Ligue 1" },
-                        teams: {
-                            home: { name: "Paris SG", logo: "https://media.api-sports.io/football/teams/85.png" },
-                            away: { name: "AJ Auxerre", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/optimized/jX0oM3wnm6cWOGKoUR3AyA_500x500.png" }
-                        }
-                    },
-                    {
-                        date: "2027-02-07T20:45:00",
-                        league: { name: "Ligue 1" },
-                        teams: {
-                            home: { name: "Paris SG", logo: "https://media.api-sports.io/football/teams/85.png" },
-                            away: { name: "OM", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/optimized/GeXt6l3ILU4QLsR-QGBZyg_500x500.png" }
-                        }
-                    },
-                    {
-                        date: "2027-02-20T21:00:00",
-                        league: { name: "Ligue 1" },
-                        teams: {
-                            home: { name: "Paris SG", logo: "https://media.api-sports.io/football/teams/85.png" },
-                            away: { name: "Stade Brestois", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/optimized/HNqZwlu71GHXo60XjYrPxg_500x500.png" }
-                        }
-                    },
-                    {
-                        date: "2027-02-28T20:45:00",
-                        league: { name: "Ligue 1" },
-                        teams: {
-                            home: { name: "Paris SG", logo: "https://media.api-sports.io/football/teams/85.png" },
-                            away: { name: "RC Lens", logo: "https://ssl.gstatic.com/onebox/media/sports/logos/optimized/TUvwItKazVFpgThEhhlN1Q_500x500.png" }
-                        }
-                    },
-                    {
-                        date: "2027-03-20T12:00:00",
-                        league: { name: "Ligue 1" },
-                        teams: {
-                            home: { name: "Paris SG", logo: "https://media.api-sports.io/football/teams/85.png" },
-                            away: { name: "RC Strasbourg", logo: "https://media.api-sports.io/football/teams/116.png" }
-                        }
-                    },
-                    {
-                        date: "2027-04-10T12:00:00",
-                        league: { name: "Ligue 1" },
-                        teams: {
-                            home: { name: "Paris SG", logo: "https://media.api-sports.io/football/teams/85.png" },
-                            away: { name: "Le Havre AC", logo: "https://media.api-sports.io/football/teams/93.png" }
-                        }
-                    },
-                    {
-                        date: "2027-04-17T12:00:00",
-                        league: { name: "Ligue 1" },
-                        teams: {
-                            home: { name: "Paris SG", logo: "https://media.api-sports.io/football/teams/85.png" },
-                            away: { name: "LOSC", logo: "https://media.api-sports.io/football/teams/75.png" }
-                        }
-                    },
-                    {
-                        date: "2027-05-01T12:00:00",
-                        league: { name: "Ligue 1" },
-                        teams: {
-                            home: { name: "Paris SG", logo: "https://media.api-sports.io/football/teams/85.png" },
-                            away: { name: "Angers SCO", logo: "https://media.api-sports.io/football/teams/77.png" }
-                        }
-                    },
-                    {
-                        date: "2027-05-16T12:00:00",
-                        league: { name: "Ligue 1" },
-                        teams: {
-                            home: { name: "Paris SG", logo: "https://media.api-sports.io/football/teams/85.png" },
-                            away: { name: "OGC Nice", logo: "https://media.api-sports.io/football/teams/84.png" }
-                        }
-                    },
-                    {
-                        date: "2027-05-29T12:00:00",
-                        league: { name: "Ligue 1" },
-                        teams: {
-                            home: { name: "Paris SG", logo: "https://media.api-sports.io/football/teams/85.png" },
-                            away: { name: "Toulouse FC", logo: "https://media.api-sports.io/football/teams/96.png" }
-                        }
-                    }
-                ];
-
-                let next = schedule.find(match => new Date(match.date) > now);
-                const others = schedule.filter(match => match !== next && new Date(match.date) > now);
-
-                if (!next) {
-                    const fallbackDate = new Date();
-                    fallbackDate.setDate(fallbackDate.getDate() + 30);
-                    fallbackDate.setHours(21, 0, 0, 0);
-
-                    next = {
-                        date: fallbackDate.toISOString(),
-                        league: { name: "Ligue 1" },
-                        teams: {
-                            home: { name: "Paris SG", logo: "https://media.api-sports.io/football/teams/85.png" },
-                            away: { name: "À définir", logo: "" }
-                        },
-                        isFake: true
-                    };
-                }
-
-                resolve({ next, others });
-            }, 1200);
-        });
+    return {
+        date: fallbackDate.toISOString(),
+        league: { name: "Ligue 1" },
+        teams: {
+            home: scheduleData[0].teams.home,
+            away: { name: "À définir", logo: "" }
+        },
+        isFake: true
     };
+};
 
-    useEffect(() => {
-        fetchMockAPI().then((data) => {
-            setMatchData(data.next);
-            setOtherMatches(data.others);
-            setIsLoading(false);
-        });
-    }, []);
-
-    useEffect(() => {
-        if (!matchData) return;
-
-        const matchDate = new Date(matchData.date);
-
-        const timer = setInterval(() => {
-            const difference = matchDate - new Date();
-
-            if (difference > 0) {
-                setTimeLeft({
-                    jours: Math.floor(difference / (1000 * 60 * 60 * 24)),
-                    heures: Math.floor((difference / (1000 * 60 * 60)) % 24),
-                    min: Math.floor((difference / 1000 / 60) % 60),
-                    sec: Math.floor((difference / 1000) % 60)
-                });
-            } else {
-                setTimeLeft({ jours: 0, heures: 0, min: 0, sec: 0 });
-            }
-        }, 1000);
-
-        return () => clearInterval(timer);
-    }, [matchData]);
-
-    const formatNumber = (num) => num.toString().padStart(2, '0');
-
-    if (isLoading) {
-        return (
-            <div className="w-full max-w-300 mx-auto my-24 p-12 bg-white border-2 border-[#ceab5d] shadow-xl flex justify-center items-center h-100">
-                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#004170]"></div>
-            </div>
-        );
-    }
+function Crest({ team, size = 'lg' }) {
+    const [failed, setFailed] = useState(false);
+    const box = size === 'lg' ? 'h-24 w-24 p-4 md:h-32 md:w-32 md:p-6' : 'h-9 w-9 p-1.5';
 
     return (
-        <section className="w-full max-w-300 mx-auto my-24 px-6 relative isolate animate-slideUpFade">
-            <div className="absolute top-1/2 left-0 right-0 h-px bg-black/10 -z-10"></div>
+        <span className={`flex shrink-0 items-center justify-center rounded-full bg-white ${box}`}>
+            {team.logo && !failed ? (
+                <img
+                    src={team.logo}
+                    alt=""
+                    loading="lazy"
+                    referrerPolicy="no-referrer"
+                    onError={() => setFailed(true)}
+                    className="h-full w-full object-contain"
+                />
+            ) : (
+                <span className={`t-display text-bleu ${size === 'lg' ? 'text-4xl' : 'text-sm'}`}>
+                    {team.logo ? team.name.slice(0, 2) : '?'}
+                </span>
+            )}
+        </span>
+    );
+}
 
-            <div className="bg-white border-2 border-[#ceab5d] shadow-2xl p-8 md:p-12 relative transition-all duration-500">
-                {matchData ? (
-                    <>
-                        <div className="text-center mb-10">
-                            <span className="text-white font-mono text-[10px] uppercase tracking-widest px-3 py-1 font-bold bg-[#DA291C]">
-                                {matchData?.league?.name || "Ligue"}
+export default function NextMatch() {
+    const [now, setNow] = useState(() => Date.now());
+    const [fallback] = useState(() => fallbackMatch(Date.now()));
+    const [showAll, setShowAll] = useState(false);
+
+    useEffect(() => {
+        const timer = setInterval(() => setNow(Date.now()), 1000);
+        return () => clearInterval(timer);
+    }, []);
+
+    const upcoming = scheduleData.filter((match) => new Date(match.date) > now);
+    const matchData = upcoming[0] ?? fallback;
+    const otherMatches = upcoming.slice(1);
+
+    const difference = Math.max(new Date(matchData.date) - now, 0);
+    const timeLeft = {
+        jours: Math.floor(difference / (1000 * 60 * 60 * 24)),
+        heures: Math.floor((difference / (1000 * 60 * 60)) % 24),
+        min: Math.floor((difference / 1000 / 60) % 60),
+        sec: Math.floor((difference / 1000) % 60)
+    };
+
+    return (
+        <section className="relative isolate overflow-hidden bg-nuit text-white" id="prochain-match">
+            <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_60%_70%_at_50%_0%,var(--color-bleu),transparent_75%)]"></div>
+
+            <div className="wrap py-20 md:py-28">
+                <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+                    <div>
+                        <Reveal as="p" className="t-label mb-6 flex items-center gap-4 text-or">
+                            <span className="h-px w-12 bg-or"></span>
+                            Jour de match
+                        </Reveal>
+                        <Reveal as="h2" variant="" className="t-display text-6xl md:text-7xl xl:text-8xl">
+                            <span className="masque"><span>Prochaine rencontre</span></span>
+                            <span className="masque" style={{ '--d': '100ms' }}><span>au Parc des Princes</span></span>
+                        </Reveal>
+                    </div>
+                    <Reveal delay={200}>
+                        <span className="t-label inline-block bg-rouge px-3 py-1.5 text-[0.625rem] font-semibold text-white">
+                            {matchData.league?.name || "Ligue"}
+                        </span>
+                    </Reveal>
+                </div>
+
+                <Reveal delay={150} className="mt-14 border border-white/15 bg-white/3">
+                    <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-4 px-4 py-10 md:px-12 md:py-14">
+                        <div className="flex flex-col items-center gap-5 text-center md:flex-row md:justify-end md:text-right">
+                            <span className="t-display order-2 text-3xl md:order-1 md:text-5xl">{matchData.teams.home.name}</span>
+                            <span className="order-1 rounded-full ring-2 ring-or ring-offset-4 ring-offset-nuit md:order-2">
+                                <Crest team={matchData.teams.home} />
                             </span>
-                            <h2 className="text-3xl md:text-4xl font-bold text-[#004170] uppercase tracking-tight italic mt-6">
-                                Prochaine Rencontre au Parc des Princes
-                            </h2>
                         </div>
 
-                        <div className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-16 mb-12">
-                            <div className="flex flex-col items-center">
-                                <div className="w-24 h-24 rounded-full bg-white flex items-center justify-center border-4 border-[#ceab5d] shadow-lg mb-4 p-4">
-                                    <img src={matchData?.teams?.home?.logo} alt={matchData?.teams?.home?.name} className="w-full h-full object-contain" />
-                                </div>
-                                <span className="font-mono text-sm uppercase tracking-widest font-bold text-[#1A1A1A] text-center w-32 truncate">
-                                    {matchData?.teams?.home?.name}
+                        <span className="t-display px-2 text-4xl text-white/30 md:px-8 md:text-6xl">VS</span>
+
+                        <div className="flex flex-col items-center gap-5 text-center md:flex-row md:text-left">
+                            <span className="rounded-full ring-2 ring-white/25 ring-offset-4 ring-offset-nuit">
+                                <Crest team={matchData.teams.away} />
+                            </span>
+                            <span className="t-display text-3xl md:text-5xl">{matchData.teams.away.name || "À définir"}</span>
+                        </div>
+                    </div>
+
+                    <div className="grid grid-cols-4 border-y border-white/15" role="timer" aria-label="Compte à rebours avant le coup d'envoi">
+                        {Object.entries(timeLeft).map(([unit, value]) => (
+                            <div key={unit} className="flex flex-col items-center border-l border-white/15 py-8 first:border-l-0 md:py-10">
+                                <span className="t-display overflow-hidden text-6xl text-or tabular-nums md:text-8xl xl:text-9xl">
+                                    <span key={value} className="chiffre">{formatNumber(value)}</span>
                                 </span>
+                                <span className="t-label mt-4 text-[0.625rem] text-white/55">{unit}</span>
                             </div>
+                        ))}
+                    </div>
 
-                            <div className="text-4xl font-light text-gray-300 italic">VS</div>
-
-                            <div className="flex flex-col items-center">
-                                <div className={`w-24 h-24 rounded-full flex items-center justify-center border-4 shadow-lg mb-4 p-4 ${matchData?.teams?.away?.logo ? 'bg-white border-gray-200' : 'bg-[#f8f8f8] border-dashed border-gray-300'}`}>
-                                    {matchData?.teams?.away?.logo ? (
-                                        <img src={matchData.teams.away.logo} alt={matchData.teams.away.name} className="w-full h-full object-contain" />
-                                    ) : (
-                                        <span className="text-gray-400 font-bold text-2xl">?</span>
-                                    )}
-                                </div>
-                                <span className="font-mono text-sm uppercase tracking-widest font-bold text-gray-500 text-center w-32 truncate">
-                                    {matchData?.teams?.away?.name || "À définir"}
-                                </span>
-                            </div>
+                    <div className="flex flex-col items-center justify-between gap-6 px-4 py-8 md:flex-row md:px-12">
+                        <p className="t-label text-center text-[0.625rem] leading-relaxed text-white/55 md:text-left">
+                            {matchData.isFake
+                                ? "Prochaine date à confirmer prochainement"
+                                : `Match prévu le ${new Date(matchData.date).toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit' })}`
+                            }
+                        </p>
+                        <div className="flex flex-col gap-4 sm:flex-row">
+                            {otherMatches.length > 0 && (
+                                <button onClick={() => setShowAll(!showAll)} aria-expanded={showAll} className="btn btn-contour" style={{ '--btn-fg-hover': 'var(--color-bleu)' }}>
+                                    {showAll ? "Fermer le calendrier" : "Voir les prochains matchs"}
+                                </button>
+                            )}
+                            <a href="https://billetterie.psg.fr" target="_blank" rel="noopener noreferrer" className="btn">
+                                Accéder à la billetterie <span className="fleche" aria-hidden="true">↗</span>
+                            </a>
                         </div>
+                    </div>
 
-                        <div className="bg-[#f8f8f8] border border-black/5 p-6 flex justify-center gap-4 md:gap-8 mb-10">
-                            {Object.entries(timeLeft).map(([unit, value]) => (
-                                <div key={unit} className="flex flex-col items-center min-w-15 md:min-w-20">
-                                    <span className="text-3xl md:text-5xl font-light tracking-tighter text-[#004170]">
-                                        {formatNumber(value)}
-                                    </span>
-                                    <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-[#DA291C] font-bold mt-2">
-                                        {unit}
-                                    </span>
-                                </div>
-                            ))}
-                        </div>
-
-                        <div className="flex flex-col items-center gap-6">
-                            <div className="flex flex-col md:flex-row gap-4">
-                                <a href="https://billetterie.psg.fr" target="_blank" rel="noopener noreferrer" className="inline-block bg-[#004170] text-white px-8 py-4 font-mono text-xs uppercase tracking-widest font-bold hover:bg-[#ceab5d] transition-all duration-300 shadow-md">
-                                    Accéder à la billetterie
-                                </a>
-                                {otherMatches.length > 0 && (
-                                    <button
-                                        onClick={() => setShowAll(!showAll)}
-                                        className="inline-block border-2 border-[#004170] text-[#004170] px-8 py-4 font-mono text-xs uppercase tracking-widest font-bold hover:bg-gray-50 transition-all duration-300 shadow-md"
-                                    >
-                                        {showAll ? "Fermer le calendrier" : "Voir les prochains matchs"}
-                                    </button>
-                                )}
-                            </div>
-
-                            <p className="text-[10px] font-serif italic text-gray-400 uppercase tracking-widest">
-                                {matchData.isFake
-                                    ? "Prochaine date à confirmer prochainement"
-                                    : `Match prévu le ${new Date(matchData.date).toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit' })}`
-                                }
-                            </p>
-                        </div>
-
-                        {showAll && otherMatches.length > 0 && (
-                            <div className="mt-12 pt-12 border-t border-gray-100 animate-slideUpFade">
-                                <h3 className="text-center font-mono text-[10px] uppercase tracking-[0.4em] text-gray-400 mb-8">
-                                    Calendrier à venir
-                                </h3>
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    {otherMatches.map((match, idx) => (
-                                        <div key={idx} className="flex items-center justify-between p-4 bg-[#f8f8f8] hover:bg-[#004170]/5 transition-colors border-l-4 border-[#ceab5d]">
+                    <div className={`repli ${showAll ? 'ouvert' : ''}`} inert={!showAll}>
+                        <div>
+                            <div className="border-t border-white/15 px-4 py-10 md:px-12">
+                                <h3 className="t-label mb-8 text-white/55">Calendrier à venir</h3>
+                                <ul className="grid grid-cols-1 gap-x-12 md:grid-cols-2">
+                                    {otherMatches.map((match) => (
+                                        <li key={match.date} className="group flex items-center justify-between gap-4 border-b border-white/10 py-4 transition-colors duration-300 hover:border-or">
                                             <div className="flex items-center gap-4">
-                                                <div className="flex -space-x-2 relative z-0">
-                                                    <img src={match.teams?.home?.logo} className="w-7 h-7 object-contain bg-white rounded-full p-1 shadow-md relative z-10 border border-gray-50" alt="PSG" />
-                                                    <img src={match.teams?.away?.logo} className="w-7 h-7 object-contain bg-white rounded-full p-1 shadow-sm relative z-0 translate-x-1" alt="Adversaire" />
-                                                </div>
-                                                <div className="flex flex-col">
-                                                    <span className="text-[10px] font-bold text-[#004170] uppercase tracking-tight">vs {match.teams?.away?.name}</span>
-                                                    <span className="text-[9px] text-gray-400 font-mono italic">{match.league?.name}</span>
+                                                <Crest team={match.teams.away} size="sm" />
+                                                <div>
+                                                    <p className="t-display text-2xl">
+                                                        <span className="text-white/40">vs</span> {match.teams.away.name}
+                                                    </p>
+                                                    <p className="t-label mt-1 text-[0.5625rem] text-white/45">{match.league?.name}</p>
                                                 </div>
                                             </div>
-                                            <div className="text-right flex flex-col">
-                                                <span className="text-[10px] font-mono text-[#DA291C] font-bold">{new Date(match.date).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' })}</span>
-                                                <span className="text-[8px] text-gray-400 uppercase font-mono">{new Date(match.date).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}</span>
-                                            </div>
-                                        </div>
+                                            <p className="t-label text-right text-[0.625rem] leading-relaxed text-or">
+                                                {new Date(match.date).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' })}
+                                                <span className="block text-white/45">
+                                                    {new Date(match.date).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}
+                                                </span>
+                                            </p>
+                                        </li>
                                     ))}
-                                </div>
+                                </ul>
                             </div>
-                        )}
-                    </>
-                ) : null}
+                        </div>
+                    </div>
+                </Reveal>
             </div>
         </section>
-    )
-};
+    );
+}

@@ -1,61 +1,53 @@
-export default function Footer({ setView }) {
+import Logo from './Logo';
+import Reveal from './Reveal';
+import Link from '../router/Link';
+import { ROUTES } from '../router/context';
+
+export default function Footer() {
     return (
-        <footer className="bg-[#F8F8F8] border-t border-black/5 pt-24 pb-12 mt-20">
-            <div className="max-w-400 mx-auto px-6 md:px-12">
+        <footer className="relative overflow-hidden bg-nuit text-white">
+            <div className="wrap pt-20 pb-10 md:pt-28">
 
-                <div className="grid grid-cols-1 md:grid-cols-12 gap-12 mb-24">
+                <div className="grid grid-cols-1 gap-12 md:grid-cols-12">
 
-                    <div className="md:col-span-5 space-y-6">
-                        <div className="flex items-center gap-3">
-                            <div className="w-8 h-8 border border-black flex items-center justify-center font-serif font-bold">P</div>
-                            <span className="font-bold tracking-widest uppercase">Parc 3D Experience</span>
-                        </div>
-                        <p className="text-gray-500 text-lg leading-relaxed max-w-md font-serif italic">
+                    <div className="space-y-7 md:col-span-5">
+                        <Link to={ROUTES.home} className="group inline-block" aria-label="Parc 3D — retour à l'accueil">
+                            <Logo />
+                        </Link>
+                        <p className="max-w-md font-serif text-xl leading-relaxed text-white/65 italic">
                             "Une exploration numérique du Parc des Princes, le plus beau stade du monde, recréé en 3D par deux étudiants en BUT MMI."
                         </p>
                     </div>
 
-                    <div className="md:col-span-3">
-                        <h3 className="font-mono text-xs uppercase tracking-[0.3em] text-gray-400 mb-8">Navigation</h3>
-                        <ul className="space-y-4">
-                            <li><button onClick={() => setView('map')} className="text-sm uppercase tracking-wider hover:text-[#E30613] transition-colors">La Carte</button></li>
-                            <li><button onClick={() => setView('3d')} className="text-sm uppercase tracking-wider hover:text-[#E30613] transition-colors">Modèle 3D</button></li>
-                            <li><button onClick={() => setView('article')} className="text-sm uppercase tracking-wider hover:text-[#E30613] transition-colors">L'Histoire</button></li>
+                    <div className="md:col-span-3 md:col-start-7">
+                        <h3 className="t-label mb-7 text-white/45">Navigation</h3>
+                        <ul className="t-display space-y-2 text-3xl">
+                            <li><Link to={ROUTES.home} className="transition-colors duration-300 hover:text-or">La Carte</Link></li>
+                            <li><Link to={ROUTES.modele} className="transition-colors duration-300 hover:text-or">Modèle 3D</Link></li>
+                            <li><Link to={ROUTES.histoire} className="transition-colors duration-300 hover:text-or">L'Histoire</Link></li>
                         </ul>
                     </div>
 
-                    <div className="md:col-span-4">
-                        <h3 className="font-mono text-xs uppercase tracking-[0.3em] text-gray-400 mb-8">Conception</h3>
-                        <div className="space-y-4 flex flex-col items-start">
-                            <button
-                                onClick={() => {
-                                    setView('creators');
-                                    setTimeout(() => document.getElementById('timeo')?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
-                                }}
-                                className="text-sm uppercase tracking-widest font-bold text-[#1A1A1A] hover:text-[#DA291C] transition-colors text-left"
-                            >
-                                Timéo Da Costa
-                            </button>
-                            <button
-                                onClick={() => {
-                                    setView('creators');
-                                    setTimeout(() => document.getElementById('axel')?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
-                                }}
-                                className="text-sm uppercase tracking-widest font-bold text-[#1A1A1A] hover:text-[#DA291C] transition-colors text-left"
-                            >
-                                Axel Treffault
-                            </button>
-                            <p className="text-xs text-gray-400 mt-4 font-mono pt-2 border-t border-black/5 w-1/2">
-                                BUT MMI - 2026
-                            </p>
-                        </div>
+                    <div className="md:col-span-3">
+                        <h3 className="t-label mb-7 text-white/45">Conception</h3>
+                        <ul className="t-display space-y-2 text-3xl">
+                            <li><Link to={ROUTES.equipe} hash="timeo" className="transition-colors duration-300 hover:text-or">Timéo Da Costa</Link></li>
+                            <li><Link to={ROUTES.equipe} hash="axel" className="transition-colors duration-300 hover:text-or">Axel Treffault</Link></li>
+                        </ul>
+                        <p className="t-label mt-6 text-white/45">BUT MMI - 2026</p>
                     </div>
                 </div>
 
-                <div className="flex justify-center items-center pt-8 border-t border-black/5 mt-12">
-                    <div className="text-[12px] font-mono text-center w-full tracking-[0.3em] text-gray-400 uppercase">
-                        &copy; Tous droits réservés — Paris, France — 2026
-                    </div>
+                <Reveal as="p" variant="" className="t-display mt-20 -mb-[0.06em] text-center text-[clamp(3rem,16vw,15rem)] whitespace-nowrap text-transparent [-webkit-text-stroke:1px_rgb(255_255_255/0.28)] select-none" aria-hidden="true">
+                    <span className="masque"><span>Ici c'est Paris</span></span>
+                </Reveal>
+
+                <div className="t-label flex flex-col items-center justify-between gap-4 border-t border-white/15 pt-8 text-[0.625rem] text-white/45 md:flex-row">
+                    <p>&copy; Tous droits réservés — Paris, France — 2026</p>
+                    <button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="group flex items-center gap-3 uppercase tracking-[inherit] transition-colors duration-300 hover:text-white">
+                        Retour en haut
+                        <span className="transition-transform duration-500 ease-expo group-hover:-translate-y-1" aria-hidden="true">↑</span>
+                    </button>
                 </div>
             </div>
         </footer>

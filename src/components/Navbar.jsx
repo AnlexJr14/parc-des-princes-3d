@@ -1,80 +1,98 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import AudioToggle from './AudioToggle';
+import Logo from './Logo';
+import Link from '../router/Link';
+import { ROUTES, useRouter } from '../router/context';
+import useScrollFrame from '../hooks/useScrollFrame';
 
-export default function Navbar({ currentView, setView }) {
+const navItems = [
+    { to: ROUTES.home, label: "Exploration" },
+    { to: ROUTES.modele, label: "Modèle 3D" },
+    { to: ROUTES.histoire, label: "L'Histoire" },
+    { to: ROUTES.equipe, label: "Créateurs" },
+];
+
+export default function Navbar() {
+    const { path } = useRouter();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [scrolled, setScrolled] = useState(false);
 
-    const navItems = [
-        { id: 'map', label: "Exploration" },
-        { id: '3d', label: "Modèle 3D" },
-        { id: 'article', label: "L'Histoire" }
-    ];
+    useScrollFrame(() => setScrolled(window.scrollY > 24));
 
-    const handleNavClick = (id) => {
-        setView(id);
-        setIsMenuOpen(false);
-    };
+    useEffect(() => {
+        document.body.style.overflow = isMenuOpen ? 'hidden' : '';
+        if (!isMenuOpen) return;
+
+        const onKey = (e) => e.key === 'Escape' && setIsMenuOpen(false);
+        window.addEventListener('keydown', onKey);
+        return () => {
+            document.body.style.overflow = '';
+            window.removeEventListener('keydown', onKey);
+        };
+    }, [isMenuOpen]);
+
+    const closeMenu = () => setIsMenuOpen(false);
 
     return (
-        <header className="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b-2 border-[#004170]/10">
-            <div className="max-w-400 mx-auto px-6 md:px-12 h-24 flex items-center justify-between">
+        <header
+            className={`fixed inset-x-0 top-0 z-50 border-b transition-[background-color,border-color,backdrop-filter] duration-500
+                ${scrolled || isMenuOpen ? 'border-white/10 bg-nuit/90 backdrop-blur-md' : 'border-transparent bg-transparent'}`}
+            style={{ viewTransitionName: 'nav' }}
+        >
+            <div className="wrap flex h-(--nav-h) items-center justify-between gap-6">
 
-                <div className="flex items-center gap-4 cursor-pointer group shrink-0" onClick={() => handleNavClick('map')}>
-                    <div className="w-12 h-12 flex items-center justify-center border-2 border-[#004170] group-hover:bg-[#004170] group-hover:text-white transition-all duration-500">
-                        <span className="font-serif font-bold text-xl">P</span>
-                    </div>
-                    <div className="hidden sm:block">
-                        <h1 className="text-xl font-bold tracking-[0.2em] uppercase leading-none text-[#004170]">
-                            Parc <span className="text-[#DA291C]">3D</span>
-                        </h1>
-                        <p className="text-[9px] font-mono uppercase tracking-[0.4em] text-[#ceab5d] mt-1 font-bold">Ici c'est Paris</p>
-                    </div>
-                </div>
+                <Link to={ROUTES.home} onClick={closeMenu} className="group shrink-0" aria-label="Parc 3D — retour à l'accueil">
+                    <Logo />
+                </Link>
 
-                <nav className="hidden md:flex items-center gap-8">
-                    {navItems.map(item => (
-                        <button
-                            key={item.id}
-                            onClick={() => handleNavClick(item.id)}
-                            className={`relative py-2 text-sm font-mono uppercase tracking-[0.2em] transition-all
-                                ${currentView === item.id
-                                    ? 'text-[#004170] font-bold after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-[#DA291C]'
-                                    : 'text-gray-400 hover:text-[#ceab5d] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-[#ceab5d] hover:after:w-full after:transition-all'
-                                }`}
-                        >
+                <nav className="hidden items-center gap-6 md:flex lg:gap-9" aria-label="Navigation principale">
+                    {navItems.map((item) => (
+                        <Link key={item.to} to={item.to} className="nav-lien t-label text-[0.6875rem] whitespace-nowrap">
                             {item.label}
-                        </button>
+                        </Link>
                     ))}
-                    
-                    <div className="border-l border-gray-200 pl-8 ml-2">
-                        <AudioToggle />
-                    </div>
                 </nav>
 
-                <button
-                    onClick={() => setIsMenuOpen(!isMenuOpen)}
-                    className="md:hidden flex flex-col justify-center items-center w-8 h-8 space-y-1.5 z-50"
-                >
-                    <span className={`block w-6 h-0.5 bg-[#004170] transition-transform duration-300 ${isMenuOpen ? 'rotate-45 translate-y-2' : ''}`}></span>
-                    <span className={`block w-6 h-0.5 bg-[#004170] transition-opacity duration-300 ${isMenuOpen ? 'opacity-0' : ''}`}></span>
-                    <span className={`block w-6 h-0.5 bg-[#004170] transition-transform duration-300 ${isMenuOpen ? '-rotate-45 -translate-y-2' : ''}`}></span>
-                </button>
+                <div className="flex items-center gap-3">
+                    <AudioToggle />
+
+                    <button
+                        onClick={() => setIsMenuOpen(!isMenuOpen)}
+                        className="relative h-10 w-10 border border-white/20 md:hidden"
+                        aria-expanded={isMenuOpen}
+                        aria-controls="menu-mobile"
+                        aria-label={isMenuOpen ? 'Fermer le menu' : 'Ouvrir le menu'}
+                    >
+                        <span className={`absolute left-2.5 right-2.5 h-0.5 bg-white transition-all duration-500 ease-expo ${isMenuOpen ? 'top-4.75 rotate-45' : 'top-3.5'}`}></span>
+                        <span className={`absolute left-2.5 right-2.5 h-0.5 bg-white transition-all duration-500 ease-expo ${isMenuOpen ? 'top-4.75 -rotate-45' : 'top-6'}`}></span>
+                    </button>
+                </div>
             </div>
 
-            <div className={`md:hidden absolute top-24 left-0 w-full bg-white shadow-xl border-b border-gray-100 transition-all duration-300 overflow-hidden ${isMenuOpen ? 'max-h-80 py-8' : 'max-h-0'}`}>
-                <nav className="flex flex-col items-center gap-6">
-                    {navItems.map(item => (
-                        <button
-                            key={item.id}
-                            onClick={() => handleNavClick(item.id)}
-                            className="text-sm font-mono uppercase tracking-widest text-gray-600"
-                        >
-                            {item.label}
-                        </button>
-                    ))}
-                    <div className="pt-4 border-t border-gray-100 w-full flex justify-center">
-                        <AudioToggle />
-                    </div>
+            <div
+                id="menu-mobile"
+                className={`absolute inset-x-0 top-full h-[calc(100dvh-var(--nav-h))] overflow-y-auto bg-nuit transition-[clip-path,visibility] duration-700 ease-expo md:hidden
+                    ${isMenuOpen ? 'visible [clip-path:inset(0)]' : 'invisible [clip-path:inset(0_0_100%_0)]'}`}
+            >
+                <nav className="wrap flex h-full flex-col justify-between py-10" aria-label="Navigation mobile">
+                    <ul>
+                        {navItems.map((item, i) => (
+                            <li key={item.to} className="overflow-hidden border-b border-white/10">
+                                <Link
+                                    to={item.to}
+                                    onClick={closeMenu}
+                                    className={`t-display flex items-baseline justify-between py-4 text-6xl transition-transform duration-700 ease-expo
+                                        ${path === item.to ? 'text-or' : 'text-white'}
+                                        ${isMenuOpen ? 'translate-y-0' : 'translate-y-full'}`}
+                                    style={{ transitionDelay: isMenuOpen ? `${120 + i * 70}ms` : '0ms' }}
+                                >
+                                    {item.label}
+                                    <span className="t-label text-white/40" aria-hidden="true">→</span>
+                                </Link>
+                            </li>
+                        ))}
+                    </ul>
+                    <p className="t-label text-white/40">Paris XVIe — BUT MMI 2026</p>
                 </nav>
             </div>
         </header>

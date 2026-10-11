@@ -1,95 +1,65 @@
-import { useRef } from 'react';
+import { useImperativeHandle, useRef } from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 
-import icon from 'leaflet/dist/images/marker-icon.png';
-import iconShadow from 'leaflet/dist/images/marker-shadow.png';
+const position = [48.8414, 2.2530];
 
-let DefaultIcon = L.icon({
-    iconUrl: icon,
-    shadowUrl: iconShadow,
-    iconSize: [25, 41],
-    iconAnchor: [12, 41],
-    popupAnchor: [1, -34],
+const bounds = [
+    [-90, -180],
+    [90, 180]
+];
+
+const repere = L.divIcon({
+    className: 'repere',
+    html: '<span class="repere__onde"></span><span class="repere__onde"></span><span class="repere__point"></span>',
+    iconSize: [56, 56],
+    iconAnchor: [28, 28],
+    popupAnchor: [0, -16],
 });
-L.Marker.prototype.options.icon = DefaultIcon;
 
-export default function Map({ onMarkerClick }) {
-    const position = [48.8414, 2.2530];
+export default function Map({ onMarkerClick, ref }) {
     const mapRef = useRef(null);
 
-    const bounds = [
-        [-90, -180],
-        [90, 180]
-    ];
+    useImperativeHandle(ref, () => ({
+        recenter: () => mapRef.current?.flyTo(position, 14, { duration: 1.5 }),
+    }));
 
-    const handleRecenter = () => {
-        if (mapRef.current) {
-            mapRef.current.flyTo(position, 14, {
-                duration: 1.5
-            });
-        }
-    };
+    const enableWheel = () => mapRef.current?.scrollWheelZoom.enable();
+    const disableWheel = () => mapRef.current?.scrollWheelZoom.disable();
 
     return (
-        <div
-            className="w-full h-150 rounded-3xl overflow-hidden border-4 border-[#ceab5d] shadow-2xl relative z-10"
-            style={{ WebkitMaskImage: '-webkit-radial-gradient(white, black)' }}
-        >
-
-            <button
-                onClick={handleRecenter}
-                className="absolute top-6 right-6 z-1000 bg-white text-[#004170] border-2 border-[#ceab5d] px-4 py-2 font-bold tracking-[0.2em] text-[10px] uppercase shadow-xl hover:bg-[#004170] hover:text-[#ceab5d] transition-all duration-300 flex items-center gap-2 group"
-            >
-                <svg className="w-4 h-4 group-hover:scale-110 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v1m0 14v1m8-8h-1M5 12H4" />
-                </svg>
-                Recentrer
-            </button>
-
+        <div className="relative z-0 h-full w-full" onClick={enableWheel} onMouseLeave={disableWheel}>
             <MapContainer
                 center={position}
                 zoom={14}
                 minZoom={3}
                 maxBounds={bounds}
                 maxBoundsViscosity={1.0}
-                scrollWheelZoom={true}
+                scrollWheelZoom={false}
                 ref={mapRef}
-                style={{ height: '100%', width: '100%', zIndex: 0, borderRadius: 'inherit' }}
+                style={{ height: '100%', width: '100%' }}
             >
                 <TileLayer
-                    attribution='&copy; OpenStreetMap'
-                    url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
+                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+                    url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
                     noWrap={true}
                 />
 
-                <Marker position={position}>
-                    <Popup className="custom-popup">
-                        <div className="text-center p-2 min-w-45">
-                            <h3 className="font-bold text-[#004170] text-lg mb-1 tracking-tight">PARC DES PRINCES</h3>
-                            <p className="text-xs text-gray-500 mb-4 leading-tight font-mono">
+                <Marker position={position} icon={repere} title="Parc des Princes" alt="Parc des Princes">
+                    <Popup className="bulle" closeButton={false}>
+                        <div className="min-w-52 p-5 text-center">
+                            <h3 className="t-display text-3xl text-bleu">Parc des Princes</h3>
+                            <p className="t-label mt-2 mb-4 text-[0.625rem] leading-relaxed text-encre/60">
                                 24 Rue du Commandant Guilbaud<br />75016 Paris
                             </p>
-                            <button
-                                onClick={onMarkerClick}
-                                className="w-full bg-[#DA291C] text-white px-4 py-2 rounded-none font-bold uppercase text-[10px] tracking-widest hover:bg-[#004170] transition-all duration-300 shadow-lg cursor-pointer"
-                            >
-                                Explorer en 3D
+                            <button onClick={onMarkerClick} className="btn w-full" style={{ '--btn-bg-hover': 'var(--color-bleu)', '--btn-fg-hover': '#fff' }}>
+                                Explorer en 3D <span className="fleche" aria-hidden="true">→</span>
                             </button>
                         </div>
                     </Popup>
                 </Marker>
             </MapContainer>
-
-            <div className="absolute top-6 left-1/2 -translate-x-1/2 z-1000 pointer-events-none">
-                <span className="bg-white text-[#004170] px-8 py-3 border-2 border-[#ceab5d] font-bold tracking-[0.2em] text-xs shadow-2xl whitespace-nowrap uppercase">
-                    Cliquez sur le marqueur
-                </span>
-            </div>
-
-            <div className="absolute bottom-0 left-0 w-full h-1.5 bg-[#DA291C] z-1000"></div>
         </div>
     );
 }

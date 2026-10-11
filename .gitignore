@@ -22,3 +22,8 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Dépendances des scripts du modèle 3D
+modele-source/outils/node_modules
+modele-source/outils/*.png
+modele-source/outils/export.glb

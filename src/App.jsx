@@ -1,30 +1,44 @@
-import { useState } from 'react';
 import { Analytics } from '@vercel/analytics/react';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
-import MainContent from './components/MainContent';
-import { articleData, creatorsData } from './data';
+import Router from './router/Router';
+import { ROUTES, useRouter } from './router/context';
+import Home from './pages/Home';
+import Modele from './pages/Modele';
+import Histoire from './pages/Histoire';
+import Equipe from './pages/Equipe';
+
+const pages = {
+  [ROUTES.home]: Home,
+  [ROUTES.modele]: Modele,
+  [ROUTES.histoire]: Histoire,
+  [ROUTES.equipe]: Equipe,
+};
+
+function Page() {
+  const { path } = useRouter();
+  const Current = pages[path];
+  return <Current key={path} />;
+}
 
 export default function App() {
-  const [view, setView] = useState('map');
-
   return (
-    <div className="min-h-screen bg-white text-[#1A1A1A] font-sans selection:bg-[#E30613]/10 flex flex-col">
+    <Router>
+      <div className="flex min-h-screen flex-col overflow-x-clip">
+        <a href="#contenu" className="btn sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-100">
+          Aller au contenu
+        </a>
 
-      <Navbar currentView={view} setView={setView} />
+        <Navbar />
 
-      <main className="grow">
-        <MainContent
-          view={view}
-          setView={setView}
-          articleData={articleData}
-          creatorsData={creatorsData}
-        />
-      </main>
+        <main id="contenu" className="grow">
+          <Page />
+        </main>
 
-      <Footer setView={setView} />
+        <Footer />
 
-      <Analytics />
-    </div>
+        <Analytics />
+      </div>
+    </Router>
   );
 }

@@ -1,106 +1,103 @@
-import { useState, useEffect, useRef } from 'react';
+import { useRef, useState } from 'react';
+import Reveal from './Reveal';
+import useScrollFrame from '../hooks/useScrollFrame';
+import { timelineData } from '../data';
+
+const DIGITS = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+
+// Chaque chiffre de l'année est une colonne 0-9 qui glisse jusqu'à la bonne valeur
+function Odometer({ value }) {
+    return (
+        <span className="odometre" aria-hidden="true">
+            {value.split('').map((digit, i) => (
+                <span
+                    key={i}
+                    className="odometre__colonne"
+                    style={{ transform: `translateY(-${Number(digit) * 0.86}em)`, transitionDelay: `${i * 60}ms` }}
+                >
+                    {DIGITS.map((d) => <span key={d}>{d}</span>)}
+                </span>
+            ))}
+        </span>
+    );
+}
 
 export default function Timeline() {
+    const [active, setActive] = useState(0);
     const [progress, setProgress] = useState(0);
-    const containerRef = useRef(null);
+    const listRef = useRef(null);
 
-    const dates = [
-        { 
-            year: "1897", 
-            title: "Le Stade-Vélodrome", 
-            desc: "Inauguration du premier Parc des Princes. Il se distingue par sa piste en ciment rose de 333 mètres et devient un haut lieu du cyclisme." 
-        },
-        { 
-            year: "1932", 
-            title: "La Première Rénovation", 
-            desc: "L'enceinte est repensée pour accueillir 40 000 places. Elle s'ouvre massivement au football et au rugby, devenant le temple du sport français." 
-        },
-        { 
-            year: "1972", 
-            title: "L'Œuvre de Taillibert", 
-            desc: "Inauguration de l'arène que l'on connaît aujourd'hui. Un chef-d'œuvre de l'architecture brutaliste porté par ses 50 portiques en béton." 
-        },
-        { 
-            year: "1974", 
-            title: "La Maison du PSG", 
-            desc: "Le Paris Saint-Germain s'y installe définitivement. Le stade devient le théâtre des plus grandes nuits européennes du club de la capitale." 
-        }
-    ];
+    useScrollFrame(() => {
+        const list = listRef.current;
+        if (!list) return;
 
-    useEffect(() => {
-        const handleScroll = () => {
-            if (!containerRef.current) return;
-            const rect = containerRef.current.getBoundingClientRect();
-            const scrollDistance = (window.innerHeight * 0.6) - rect.top;
-            let percentage = (scrollDistance / rect.height) * 100;
-            
-            percentage = Math.max(0, Math.min(percentage, 100)); 
-            setProgress(percentage);
-        };
+        const line = window.innerHeight * 0.55;
+        let current = 0;
+        [...list.children].forEach((item, i) => {
+            if (item.getBoundingClientRect().top < line) current = i;
+        });
+        setActive(current);
 
-        window.addEventListener('scroll', handleScroll);
-        handleScroll(); 
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, []);
+        const rect = list.getBoundingClientRect();
+        setProgress(Math.max(0, Math.min((line - rect.top) / rect.height, 1)));
+    });
 
     return (
-        <section className="w-full bg-[#f8f8f8] py-24 px-6 overflow-hidden">
-            <div className="max-w-300 mx-auto">
-                
-                <div className="text-center mb-20">
-                    <span className="text-[#DA291C] font-mono tracking-[0.4em] text-xs uppercase block font-bold mb-3">Héritage</span>
-                    <h2 className="text-4xl md:text-5xl font-bold text-[#004170] uppercase tracking-tight italic">
-                        La Traversée du Temps
-                    </h2>
+        <section className="beton" id="heritage">
+            <div className="wrap grid grid-cols-1 gap-x-16 py-20 md:py-32 lg:grid-cols-12">
+
+                <div className="lg:col-span-5">
+                    <div className="lg:sticky lg:top-[calc(var(--nav-h)+3rem)]">
+                        <Reveal as="p" className="t-label mb-6 flex items-center gap-4 text-rouge">
+                            <span className="h-px w-12 bg-rouge"></span>
+                            Héritage
+                        </Reveal>
+                        <Reveal as="h2" variant="" className="t-display text-6xl text-bleu md:text-7xl xl:text-8xl">
+                            <span className="masque"><span>La traversée</span></span>
+                            <span className="masque" style={{ '--d': '100ms' }}><span>du temps</span></span>
+                        </Reveal>
+
+                        <div className="mt-12 hidden lg:block">
+                            <p className="t-display text-[clamp(9rem,17vw,17rem)] text-bleu">
+                                <Odometer value={timelineData[active].year} />
+                            </p>
+                            <p className="t-label mt-6 flex items-center gap-4 text-encre/50">
+                                <span className="text-rouge">0{active + 1}</span>
+                                <span className="relative h-px w-32 bg-bleu/20">
+                                    <span className="absolute inset-0 origin-left bg-rouge transition-transform duration-500 ease-out" style={{ transform: `scaleX(${progress})` }}></span>
+                                </span>
+                                0{timelineData.length}
+                            </p>
+                        </div>
+                    </div>
                 </div>
 
-                <div ref={containerRef} className="relative w-full max-w-4xl mx-auto">
-                    
-                    <div className="absolute left-6 md:left-1/2 md:-translate-x-1/2 top-0 bottom-0 w-1 bg-black/10"></div>
-                    
-                    <div 
-                        className="absolute left-6 md:left-1/2 md:-translate-x-1/2 top-0 w-1 bg-[#DA291C] transition-all duration-300 ease-out" 
-                        style={{ height: `${progress}%` }}
-                    >
-                        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-3 h-10 bg-linear-to-t from-[#DA291C] to-transparent blur-[2px]"></div>
-                    </div>
-
-                    <div className="flex flex-col gap-16 md:gap-24 relative z-10 pt-8">
-                        {dates.map((item, index) => {
-                            const threshold = (index / (dates.length - 1)) * 100;
-                            const isActive = progress >= threshold - 5;
-
-                            return (
-                                <div key={index} className={`flex flex-col md:flex-row items-center w-full ${index % 2 === 0 ? 'md:flex-row-reverse' : ''}`}>
-                                    
-                                    <div className="hidden md:block md:w-1/2"></div>
-                                    
-                                    <div className="absolute left-6 md:left-1/2 -translate-x-1/2 w-6 h-6 rounded-full border-4 border-white transition-colors duration-500 shadow-md"
-                                         style={{ backgroundColor: isActive ? '#DA291C' : '#e5e7eb' }}>
-                                    </div>
-
-                                    <div className={`w-full pl-16 md:pl-0 md:w-1/2 flex ${index % 2 === 0 ? 'md:justify-start md:pl-12' : 'md:justify-end md:pr-12'}`}>
-                                        <div 
-                                            className={`bg-white p-8 border-t-4 border-[#ceab5d] shadow-xl transition-all duration-700 ease-out transform ${isActive ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}
-                                        >
-                                            <div className="text-4xl md:text-5xl font-light tracking-tighter text-[#004170] mb-2">
-                                                {item.year}
-                                            </div>
-                                            <h3 className="font-bold uppercase tracking-widest text-xs text-[#1A1A1A] mb-4">
-                                                {item.title}
-                                            </h3>
-                                            <p className="text-sm text-gray-500 font-serif italic leading-relaxed">
-                                                {item.desc}
-                                            </p>
-                                        </div>
-                                    </div>
-                                    
+                <ol ref={listRef} className="relative mt-14 lg:col-span-7 lg:mt-0 lg:py-[12vh]">
+                    {timelineData.map((item, index) => (
+                        <li
+                            key={item.year}
+                            className={`relative border-t border-bleu/20 py-10 transition-opacity duration-700 last:border-b lg:py-[9vh] ${index === active ? '' : 'lg:opacity-30'}`}
+                        >
+                            <span
+                                className="absolute -top-px left-0 h-0.5 w-full origin-left bg-rouge transition-transform duration-1000 ease-expo"
+                                style={{ transform: `scaleX(${index === active ? 1 : 0})` }}
+                            ></span>
+                            <Reveal className="grid grid-cols-1 gap-x-10 gap-y-3 md:grid-cols-[9rem_1fr]">
+                                <p className="t-display text-7xl text-bleu md:text-6xl lg:text-5xl">
+                                    {item.year}
+                                </p>
+                                <div>
+                                    <h3 className="t-display text-4xl text-encre md:text-5xl">
+                                        {item.title}
+                                    </h3>
+                                    <p className="mt-4 max-w-xl font-serif text-xl leading-relaxed text-encre/70">
+                                        {item.desc}
+                                    </p>
                                 </div>
-                            );
-                        })}
-                    </div>
-                    
-                </div>
+                            </Reveal>
+                        </li>
+                    ))}
+                </ol>
             </div>
         </section>
     );
