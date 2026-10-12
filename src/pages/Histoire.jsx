@@ -7,7 +7,6 @@ import { ROUTES } from '../router/context';
 import useScrollFrame from '../hooks/useScrollFrame';
 import { articleData as data, creatorsData } from '../data';
 
-// Repères chiffrés tirés du texte, affichés en marge
 const reperes = [
     ['1972', 'Inauguration'],
     ['50', 'Piliers en béton'],
@@ -27,7 +26,6 @@ export default function Histoire() {
             progressRef.current.style.transform = `scaleX(${Math.min(doc.scrollTop / max, 1)})`;
         }
 
-        // Parallaxe : 0 quand la photo entre par le bas de la fenêtre, 1 quand elle sort par le haut
         if (photoRef.current) {
             const rect = photoRef.current.getBoundingClientRect();
             const p = (window.innerHeight - rect.top) / (window.innerHeight + rect.height);

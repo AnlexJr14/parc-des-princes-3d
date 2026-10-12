@@ -83,8 +83,6 @@ export default function Model3D({ data }) {
         applyFinish(originalsRef.current, next);
     };
 
-    // Sur iPhone, Safari réserve le vrai plein écran aux vidéos : la visionneuse
-    // s'étend alors elle-même sur toute la fenêtre
     useEffect(() => {
         if (!pseudoFullscreen) return;
         const onKey = (e) => e.key === 'Escape' && setPseudoFullscreen(false);

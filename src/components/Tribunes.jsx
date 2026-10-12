@@ -42,7 +42,6 @@ export default function Tribunes() {
     const [hovered, setHovered] = useState(null);
     const [selected, setSelected] = useState(null);
     const active = hovered ?? selected;
-    // La tribune choisie d'un clic passe en tête de liste
     const ordered = [...tribunesData].sort((a, b) => (b.id === selected) - (a.id === selected));
 
     return (

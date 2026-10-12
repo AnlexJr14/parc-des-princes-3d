@@ -47,7 +47,6 @@ export default function StadiumPlan({ className = '' }) {
             <div className="plan__bascule">
                 <div className="plan__plateau">
 
-                    {/* Sol : emprise et pelouse */}
                     <Couche z={0}>
                         <path d={ellipse(384)} stroke="#fff" strokeOpacity=".22" strokeDasharray="2 7" />
                         <path d={ellipse(372)} fill="#001b30" fillOpacity=".55" />
@@ -68,21 +67,18 @@ export default function StadiumPlan({ className = '' }) {
                         <circle cx={C} cy={C} r="4" fill="#DA291C" />
                     </Couche>
 
-                    {/* Gradins bas */}
                     <Couche z={1}>
                         <path d={anneau(276, 212)} fillRule="evenodd" fill="#004170" fillOpacity=".5" stroke="#fff" strokeOpacity=".55" />
                         <path d={ellipse(244)} stroke="#fff" strokeOpacity=".2" />
                         <path d={rayons(25, 212, 276)} stroke="#fff" strokeOpacity=".22" />
                     </Couche>
 
-                    {/* Gradins hauts */}
                     <Couche z={2}>
                         <path d={anneau(338, 270)} fillRule="evenodd" fill="#004170" fillOpacity=".42" stroke="#fff" strokeOpacity=".55" />
                         <path d={ellipse(304)} stroke="#fff" strokeOpacity=".2" />
                         <path d={rayons(N, 270, 338)} stroke="#fff" strokeOpacity=".18" />
                     </Couche>
 
-                    {/* Les 50 portiques, répétés en hauteur pour suggérer leur élancement */}
                     <Couche z={2.6}>
                         <path d={rayons(N, 330, 376)} stroke="#ceab5d" strokeOpacity=".3" strokeWidth="2" />
                     </Couche>
@@ -97,14 +93,11 @@ export default function StadiumPlan({ className = '' }) {
                         </g>
                     </Couche>
 
-                    {/* Toiture en porte-à-faux */}
                     <Couche z={5}>
                         <path d={anneau(370, 238)} fillRule="evenodd" fill="#fff" fillOpacity=".07" stroke="#fff" strokeOpacity=".7" strokeWidth="1.2" />
                         <path d={rayons(N, 238, 370)} stroke="#fff" strokeOpacity=".16" />
                         <path d={ellipse(238)} stroke="#ceab5d" strokeWidth="2" />
                     </Couche>
-
-                    {/* La ronde des projecteurs, tracée sur un cercle puis aplatie en ellipse */}
                     <div className="plan__couche" style={{ '--z': 5.05 }} aria-hidden="true">
                         <div className="absolute inset-0" style={{ transform: `scaleY(${K})` }}>
                             <svg className="plan__ronde h-full w-full overflow-visible" viewBox="0 0 800 800">

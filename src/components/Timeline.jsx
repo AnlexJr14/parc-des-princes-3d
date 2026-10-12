@@ -5,7 +5,6 @@ import { timelineData } from '../data';
 
 const DIGITS = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
 
-// Chaque chiffre de l'année est une colonne 0-9 qui glisse jusqu'à la bonne valeur
 function Odometer({ value }) {
     return (
         <span className="odometre" aria-hidden="true">
