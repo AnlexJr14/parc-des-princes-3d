@@ -97,7 +97,7 @@ export const tribunesData = [
         id: "auteuil",
         name: "Virage Auteuil",
         color: "#004170",
-        desc: "Historiquement le cœur bouillant des supporters parisiens, situé à l'Ouest. Il est réputé pour ses tifos spectaculaires et son ambiance électrique."
+        desc: "Historiquement le cœur bouillant des supporters parisiens, situé au Nord. Il est réputé pour ses tifos spectaculaires et son ambiance électrique."
     },
     {
         id: "paris",
@@ -115,7 +115,7 @@ export const tribunesData = [
         id: "boulogne",
         name: "Kop of Boulogne",
         color: "#DA291C",
-        desc: "Le berceau historique du supportérisme au Parc. Situé à l'Est, il fait face à Auteuil pour créer des chants en écho mythiques."
+        desc: "Le berceau historique du supportérisme au Parc. Situé au Sud, il fait face à Auteuil pour créer des chants en écho mythiques."
     }
 ];
 
