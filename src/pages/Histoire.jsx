@@ -93,7 +93,6 @@ export default function Histoire() {
                                 <img src="/photo1.jpg" alt="Parc des Princes" className="h-auto w-full" />
                             </Reveal>
                             <figcaption className="t-label mt-4 flex items-center gap-4 text-[0.625rem] text-encre/55">
-                                <span className="h-px w-8 bg-rouge"></span>
                                 Le Parc des Princes, Paris XVIe
                             </figcaption>
                         </figure>
@@ -125,7 +124,6 @@ export default function Histoire() {
             <section className="beton" aria-label="Les auteurs">
                 <div className="wrap py-16 md:py-24">
                     <Reveal as="p" className="t-label mb-8 flex items-center gap-4 text-rouge">
-                        <span className="h-px w-12 bg-rouge"></span>
                         {data.authors}
                     </Reveal>
                     <div className="grid grid-cols-1 border-t border-bleu/20 md:grid-cols-2">

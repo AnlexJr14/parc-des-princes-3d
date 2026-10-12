@@ -74,7 +74,6 @@ export default function NextMatch() {
                 <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
                     <div>
                         <Reveal as="p" className="t-label mb-6 flex items-center gap-4 text-or">
-                            <span className="h-px w-12 bg-or"></span>
                             Jour de match
                         </Reveal>
                         <Reveal as="h2" variant="" className="t-display text-6xl md:text-7xl xl:text-8xl">

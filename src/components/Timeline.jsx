@@ -49,7 +49,6 @@ export default function Timeline() {
                 <div className="lg:col-span-5">
                     <div className="lg:sticky lg:top-[calc(var(--nav-h)+3rem)]">
                         <Reveal as="p" className="t-label mb-6 flex items-center gap-4 text-rouge">
-                            <span className="h-px w-12 bg-rouge"></span>
                             Héritage
                         </Reveal>
                         <Reveal as="h2" variant="" className="t-display text-6xl text-bleu md:text-7xl xl:text-8xl">

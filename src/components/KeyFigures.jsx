@@ -30,23 +30,22 @@ export default function KeyFigures() {
         <section className="beton" aria-label="Chiffres clés">
             <div className="wrap py-20 md:py-28">
                 <Reveal as="p" className="t-label mb-10 flex items-center gap-4 text-rouge">
-                    <span className="h-px w-12 bg-rouge"></span>
                     Le Parc en chiffres
                 </Reveal>
 
-                <div className="grid grid-cols-1 border-t border-bleu/20 sm:grid-cols-2 lg:grid-cols-4">
+                <div className="grid grid-cols-2 border-t border-bleu/20 lg:grid-cols-4">
                     {figuresData.map((fig, index) => (
                         <Reveal
                             key={fig.label}
                             delay={index * 110}
-                            className="group border-b border-bleu/20 py-8 sm:px-8 sm:odd:border-r sm:odd:pl-0 lg:border-r lg:border-b-0 lg:px-8 lg:first:pl-0 lg:last:border-r-0"
+                            className="group border-b border-bleu/20 py-6 odd:border-r odd:pr-4 even:pl-5 sm:py-8 sm:odd:pr-8 sm:even:pl-8 lg:border-r lg:border-b-0 lg:pr-8 lg:not-first:pl-8 lg:last:border-r-0"
                         >
-                            <p className={`t-display text-[clamp(4.5rem,9vw,8.5rem)] ${fig.accent ? 'text-rouge' : 'text-bleu'}`}>
+                            <p className={`t-display text-[clamp(2.75rem,13vw,4.5rem)] sm:text-[clamp(4.5rem,9vw,8.5rem)] ${fig.accent ? 'text-rouge' : 'text-bleu'}`}>
                                 <AnimatedNumber target={fig.value} duration={2500} plain={fig.plain} />
                             </p>
-                            <h3 className="t-label mt-5 text-encre">{fig.label}</h3>
+                            <h3 className="t-label mt-3 text-[0.625rem] text-encre sm:mt-5 sm:text-[0.6875rem]">{fig.label}</h3>
                             <span className="mt-4 block h-0.5 w-10 bg-or transition-all duration-700 ease-expo group-hover:w-24 group-hover:bg-rouge"></span>
-                            <p className="mt-4 font-serif text-lg italic text-encre/60">{fig.detail}</p>
+                            <p className="mt-4 font-serif text-base italic text-encre/60 sm:text-lg">{fig.detail}</p>
                         </Reveal>
                     ))}
                 </div>

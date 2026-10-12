@@ -47,6 +47,7 @@ export default function Model3D({ data }) {
     const [finish, setFinish] = useState('realiste');
     const [autoRotate, setAutoRotate] = useState(false);
     const [isFullscreen, setIsFullscreen] = useState(false);
+    const [pseudoFullscreen, setPseudoFullscreen] = useState(false);
 
     useEffect(() => {
         const viewer = viewerRef.current;
@@ -82,10 +83,28 @@ export default function Model3D({ data }) {
         applyFinish(originalsRef.current, next);
     };
 
+    // Sur iPhone, Safari réserve le vrai plein écran aux vidéos : la visionneuse
+    // s'étend alors elle-même sur toute la fenêtre
+    useEffect(() => {
+        if (!pseudoFullscreen) return;
+        const onKey = (e) => e.key === 'Escape' && setPseudoFullscreen(false);
+        document.body.style.overflow = 'hidden';
+        window.addEventListener('keydown', onKey);
+        return () => {
+            document.body.style.overflow = '';
+            window.removeEventListener('keydown', onKey);
+        };
+    }, [pseudoFullscreen]);
+
     const toggleFullscreen = () => {
+        const stage = stageRef.current;
         if (document.fullscreenElement) document.exitFullscreen();
-        else stageRef.current.requestFullscreen?.();
+        else if (pseudoFullscreen) setPseudoFullscreen(false);
+        else if (!stage.requestFullscreen) setPseudoFullscreen(true);
+        else stage.requestFullscreen().catch(() => setPseudoFullscreen(true));
     };
+
+    const expanded = isFullscreen || pseudoFullscreen;
 
     const studio = finish !== 'realiste';
     const lit = Math.round(progress * 50);
@@ -94,7 +113,7 @@ export default function Model3D({ data }) {
     const etiquette = 'hidden h-11 items-center px-4 text-white/50 sm:flex';
 
     return (
-        <div ref={stageRef} className="relative isolate h-[min(78svh,52rem)] min-h-112 w-full overflow-hidden border border-white/15 bg-nuit">
+        <div ref={stageRef} className={`isolate w-full overflow-hidden border border-white/15 bg-nuit ${pseudoFullscreen ? 'fixed inset-0 z-100 h-dvh' : 'relative h-[min(78svh,52rem)] min-h-112'}`}>
 
             <model-viewer
                 ref={viewerRef}
@@ -208,11 +227,11 @@ export default function Model3D({ data }) {
                     <button
                         onClick={toggleFullscreen}
                         className={control}
-                        aria-label={isFullscreen ? 'Quitter le plein écran' : 'Plein écran'}
-                        title={isFullscreen ? 'Quitter le plein écran' : 'Plein écran'}
+                        aria-label={expanded ? 'Quitter le plein écran' : 'Plein écran'}
+                        title={expanded ? 'Quitter le plein écran' : 'Plein écran'}
                     >
                         <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                            {isFullscreen
+                            {expanded
                                 ? <path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5" />
                                 : <path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" />}
                         </svg>

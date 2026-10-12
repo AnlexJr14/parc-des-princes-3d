@@ -41,7 +41,6 @@ export default function Hero() {
 
                 <div className="relative z-10 lg:col-span-7" style={{ transform: 'translateY(calc(var(--p, 0) * -4rem))', opacity: 'calc(1 - var(--p, 0) * 1.4)' }}>
                     <p className="reveal t-label mb-7 flex flex-wrap items-center gap-x-4 gap-y-2 text-or" style={{ '--d': '200ms' }}>
-                        <span className="trait h-px w-12 bg-or" style={{ '--d': '300ms' }}></span>
                         Paris XVIe
                         <span className="text-white/45">48.8414° N — 2.2530° E</span>
                     </p>

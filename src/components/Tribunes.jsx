@@ -39,13 +39,16 @@ const PORTIQUES = Array.from({ length: 50 }, (_, i) => {
 }).join('');
 
 export default function Tribunes() {
-    const [active, setActive] = useState(null);
+    const [hovered, setHovered] = useState(null);
+    const [selected, setSelected] = useState(null);
+    const active = hovered ?? selected;
+    // La tribune choisie d'un clic passe en tête de liste
+    const ordered = [...tribunesData].sort((a, b) => (b.id === selected) - (a.id === selected));
 
     return (
         <section className="beton" id="anatomie">
             <div className="wrap py-20 md:py-28">
                 <Reveal as="p" className="t-label mb-6 flex items-center gap-4 text-rouge">
-                    <span className="h-px w-12 bg-rouge"></span>
                     Quatre tribunes
                 </Reveal>
                 <Reveal as="h2" variant="" className="t-display text-6xl text-bleu md:text-7xl xl:text-8xl">
@@ -55,7 +58,7 @@ export default function Tribunes() {
                 <div className="mt-14 grid grid-cols-1 items-center gap-x-16 gap-y-12 lg:grid-cols-12">
 
                     <Reveal className="lg:col-span-6">
-                        <svg viewBox="0 0 600 440" className="w-full" role="img" aria-label="Plan des quatre tribunes du Parc des Princes">
+                        <svg viewBox="0 0 600 440" className="w-full" role="group" aria-label="Plan des quatre tribunes du Parc des Princes — cliquez sur une tribune">
                             <path d={PORTIQUES} stroke="#004170" strokeWidth="2" strokeOpacity=".45" />
 
                             {tribunesData.map((tribune) => {
@@ -64,9 +67,15 @@ export default function Tribunes() {
                                 return (
                                     <g
                                         key={tribune.id}
-                                        onMouseEnter={() => setActive(tribune.id)}
-                                        onMouseLeave={() => setActive(null)}
-                                        className="cursor-pointer"
+                                        onMouseEnter={() => setHovered(tribune.id)}
+                                        onMouseLeave={() => setHovered(null)}
+                                        onClick={() => setSelected(tribune.id)}
+                                        onKeyDown={(e) => e.key === 'Enter' && setSelected(tribune.id)}
+                                        role="button"
+                                        tabIndex={0}
+                                        aria-label={tribune.name}
+                                        aria-pressed={selected === tribune.id}
+                                        className="cursor-pointer outline-none"
                                     >
                                         <path
                                             d={sectorPath(sectors[tribune.id])}
@@ -103,18 +112,16 @@ export default function Tribunes() {
                     </Reveal>
 
                     <ul className="border-t border-bleu/20 lg:col-span-6">
-                        {tribunesData.map((tribune, index) => {
+                        {ordered.map((tribune, index) => {
                             const isActive = active === tribune.id;
                             return (
                                 <Reveal
                                     as="li"
                                     key={tribune.id}
                                     delay={index * 90}
-                                    onMouseEnter={() => setActive(tribune.id)}
-                                    onMouseLeave={() => setActive(null)}
-                                    onFocus={() => setActive(tribune.id)}
-                                    onBlur={() => setActive(null)}
-                                    tabIndex={0}
+                                    onMouseEnter={() => setHovered(tribune.id)}
+                                    onMouseLeave={() => setHovered(null)}
+                                    onClick={() => setSelected(tribune.id)}
                                     className={`relative border-b border-bleu/20 py-7 pr-4 pl-7 transition-[background-color,opacity,transform] duration-500 ${isActive ? 'bg-white' : active ? 'opacity-45' : ''}`}
                                 >
                                     <span

@@ -17,7 +17,6 @@ function Card({ to, label, title, image, alt, delay }) {
                 <span className="absolute inset-x-0 top-0 h-1 origin-left scale-x-0 bg-rouge transition-transform duration-700 ease-expo group-hover:scale-x-100"></span>
 
                 <span className="t-label mb-4 flex items-center gap-4 text-or">
-                    <span className="h-px w-12 bg-or"></span>
                     {label}
                 </span>
                 <span className="flex items-end justify-between gap-6">

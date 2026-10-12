@@ -18,7 +18,6 @@ export default function Localisation() {
 
                 <div className="lg:col-span-5">
                     <Reveal as="p" className="t-label mb-6 flex items-center gap-4 text-or">
-                        <span className="h-px w-12 bg-or"></span>
                         Localisation stratégique
                     </Reveal>
                     <Reveal as="h2" variant="" className="t-display text-6xl md:text-7xl lg:text-6xl xl:text-7xl 2xl:text-8xl">

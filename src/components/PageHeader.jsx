@@ -18,7 +18,6 @@ export default function PageHeader({ eyebrow, title, back, children, aside }) {
                 {back && <div className="reveal mb-12 md:mb-16">{back}</div>}
 
                 <p className="reveal t-label mb-6 flex items-center gap-4 text-or" style={{ '--d': '100ms' }}>
-                    <span className="trait h-px w-12 bg-or" style={{ '--d': '200ms' }}></span>
                     {eyebrow}
                 </p>
                 <h1 className="t-display text-[clamp(2.75rem,12.5vw,12rem)]">

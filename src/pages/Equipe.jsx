@@ -56,7 +56,6 @@ export default function Equipe() {
 
                             <div className="lg:col-span-7 lg:pt-6">
                                 <Reveal as="p" className="t-label mb-5 flex items-center gap-4 text-rouge">
-                                    <span className="h-px w-12 shrink-0 bg-rouge"></span>
                                     {creator.role}
                                 </Reveal>
                                 <Reveal as="h2" variant="" className="t-display text-[clamp(3.75rem,9vw,8.5rem)] text-bleu">
